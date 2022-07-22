@@ -13,12 +13,12 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_glass": {
+    "has_compass": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:glass"
+              "minecraft:compass"
             ]
           }
         ]
@@ -82,7 +82,7 @@
   },
   "requirements": [
     [
-      "has_glass",
+      "has_compass",
       "has_gold_ingot",
       "has_comparator",
       "has_lever",

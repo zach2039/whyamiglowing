@@ -25,22 +25,60 @@ public class WhyAmIGlowingRecipeProvider extends RecipeProvider {
 		// Geiger Counter
 		{
 			ShapedRecipeBuilder.shaped(ModItems.GEIGER_COUNTER.get())
-					.pattern("gGg")
+					.pattern("gCg")
 					.pattern("gRB")
-					.pattern("gCL")
-					.define('G', Ingredient.of(Blocks.GLASS))
+					.pattern("gcL")
+					.define('C', Ingredient.of(COMPASS))
 					.define('g', Ingredient.of(GOLD_INGOT))
-					.define('C', Ingredient.of(Blocks.COMPARATOR))
+					.define('c', Ingredient.of(Blocks.COMPARATOR))
 					.define('L', Ingredient.of(LEVER))
 					.define('B', Ingredient.of(Blocks.STONE_BUTTON))
 					.define('R', Ingredient.of(REDSTONE))
-					.unlockedBy("has_glass", has(Blocks.GLASS))
+					.unlockedBy("has_compass", has(COMPASS))
 					.unlockedBy("has_gold_ingot", has(GOLD_INGOT))
 					.unlockedBy("has_comparator", has(Blocks.COMPARATOR))
 					.unlockedBy("has_lever", has(LEVER))
 					.unlockedBy("has_stone_button", has(Blocks.STONE_BUTTON))
 					.unlockedBy("has_redstone", has(REDSTONE))
 					.save(recipeConsumer, new ResourceLocation(WhyAmIGlowing.MODID, "geiger_counter"));
+		}
+
+		// Rad-Away
+		{
+			ShapedRecipeBuilder.shaped(ModItems.RAD_AWAY.get())
+					.pattern(" T ")
+					.pattern("MBG")
+					.pattern(" P ")
+					.define('B', Ingredient.of(HONEY_BOTTLE))
+					.define('T', Ingredient.of(GHAST_TEAR))
+					.define('M', Ingredient.of(GLISTERING_MELON_SLICE))
+					.define('G', Ingredient.of(GOLDEN_APPLE))
+					.define('P', Ingredient.of(PRISMARINE_CRYSTALS))
+					.unlockedBy("has_honey_bottle", has(HONEY_BOTTLE))
+					.unlockedBy("has_ghast_tear", has(GHAST_TEAR))
+					.unlockedBy("has_glistering_melon_slice", has(GLISTERING_MELON_SLICE))
+					.unlockedBy("has_golden_apple", has(GOLDEN_APPLE))
+					.unlockedBy("has_prismarine_crystals", has(PRISMARINE_CRYSTALS))
+					.save(recipeConsumer, new ResourceLocation(WhyAmIGlowing.MODID, "rad_away"));
+		}
+
+		// Rad-X
+		{
+			ShapedRecipeBuilder.shaped(ModItems.RAD_X.get())
+					.pattern(" O ")
+					.pattern("MBG")
+					.pattern(" P ")
+					.define('B', Ingredient.of(HONEY_BOTTLE))
+					.define('O', Ingredient.of(RAW_GOLD))
+					.define('M', Ingredient.of(MAGMA_CREAM))
+					.define('G', Ingredient.of(GLOWSTONE_DUST))
+					.define('P', Ingredient.of(PRISMARINE_CRYSTALS))
+					.unlockedBy("has_honey_bottle", has(HONEY_BOTTLE))
+					.unlockedBy("has_gold_ore", has(GOLD_ORE))
+					.unlockedBy("has_magma_cream", has(MAGMA_CREAM))
+					.unlockedBy("has_glowstone_dust", has(GLOWSTONE_DUST))
+					.unlockedBy("has_prismarine_crystals", has(PRISMARINE_CRYSTALS))
+					.save(recipeConsumer, new ResourceLocation(WhyAmIGlowing.MODID, "rad_x"));
 		}
 	}
 
