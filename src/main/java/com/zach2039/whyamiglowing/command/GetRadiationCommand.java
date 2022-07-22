@@ -4,7 +4,6 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import com.zach2039.whyamiglowing.api.capability.radiation.IRadiation;
 import com.zach2039.whyamiglowing.capability.radiation.RadiationCapability;
 import com.zach2039.whyamiglowing.core.RadiationHelper;
 import com.zach2039.whyamiglowing.text.WhyAmIGlowingLang;

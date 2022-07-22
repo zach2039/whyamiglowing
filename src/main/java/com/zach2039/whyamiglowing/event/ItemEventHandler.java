@@ -7,7 +7,6 @@ import com.zach2039.whyamiglowing.core.RadiationHelper;
 import com.zach2039.whyamiglowing.util.CapabilityNotPresentException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;

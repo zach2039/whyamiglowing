@@ -1,13 +1,7 @@
 package com.zach2039.whyamiglowing.world.item;
 
-import com.zach2039.whyamiglowing.WhyAmIGlowing;
-import com.zach2039.whyamiglowing.api.capability.radiation.IRadiation;
-import com.zach2039.whyamiglowing.api.capability.radiationsource.IRadiationSource;
-import com.zach2039.whyamiglowing.capability.radiation.RadiationCapability;
-import com.zach2039.whyamiglowing.capability.radiationsource.RadiationSourceCapability;
 import com.zach2039.whyamiglowing.core.RadiationHelper;
 import com.zach2039.whyamiglowing.text.WhyAmIGlowingLang;
-import com.zach2039.whyamiglowing.util.CapabilityNotPresentException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -21,7 +15,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 import java.util.List;

@@ -1,29 +1,23 @@
 package com.zach2039.whyamiglowing;
 
 import com.zach2039.whyamiglowing.compat.ftbic.FTBICDummyInterop;
-import com.zach2039.whyamiglowing.compat.ftbic.FTBICInteropImpl;
 import com.zach2039.whyamiglowing.compat.ftbic.IFTBICInterop;
 import com.zach2039.whyamiglowing.config.WhyAmIGlowingConfig;
 import com.zach2039.whyamiglowing.init.*;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.InvocationTargetException;
 
 @Mod(WhyAmIGlowing.MODID)
 public class WhyAmIGlowing {

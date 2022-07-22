@@ -4,7 +4,6 @@ import com.zach2039.whyamiglowing.WhyAmIGlowing;
 import com.zach2039.whyamiglowing.init.ModTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
-import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagEntry;
 import net.minecraft.world.level.block.Blocks;

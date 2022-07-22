@@ -1,7 +1,6 @@
 package com.zach2039.whyamiglowing.command;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.zach2039.whyamiglowing.api.capability.radiation.IRadiation;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;

@@ -1,7 +1,6 @@
 package com.zach2039.whyamiglowing.client.init;
 
 import com.zach2039.whyamiglowing.WhyAmIGlowing;
-import com.zach2039.whyamiglowing.capability.radiation.RadiationCapability;
 import com.zach2039.whyamiglowing.client.gui.GeigerCounterGuiOverlay;
 import com.zach2039.whyamiglowing.text.WhyAmIGlowingLang;
 import net.minecraft.client.Minecraft;

@@ -4,7 +4,6 @@ import com.zach2039.whyamiglowing.WhyAmIGlowing;
 import com.zach2039.whyamiglowing.world.item.GeigerCounterItem;
 import com.zach2039.whyamiglowing.world.item.RadAwayItem;
 import com.zach2039.whyamiglowing.world.item.RadXItem;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;

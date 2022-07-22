@@ -1,11 +1,9 @@
 package com.zach2039.whyamiglowing.util;
 
-import com.zach2039.whyamiglowing.WhyAmIGlowing;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.Arrays;

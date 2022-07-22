@@ -2,7 +2,6 @@ package com.zach2039.whyamiglowing.capability.chunkradiation;
 
 import com.zach2039.whyamiglowing.WhyAmIGlowing;
 import com.zach2039.whyamiglowing.api.capability.chunkradiation.IChunkRadiation;
-import com.zach2039.whyamiglowing.api.capability.radiationsource.IRadiationSource;
 import com.zach2039.whyamiglowing.capability.radiationsource.RadiationSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -10,11 +9,8 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraftforge.common.util.INBTSerializable;
-import org.checkerframework.checker.units.qual.C;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ChunkRadiation implements IChunkRadiation, INBTSerializable<CompoundTag> {

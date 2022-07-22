@@ -2,7 +2,6 @@ package com.zach2039.whyamiglowing.world.item;
 
 import com.zach2039.whyamiglowing.core.RadiationHelper;
 import com.zach2039.whyamiglowing.init.ModMobEffects;
-import com.zach2039.whyamiglowing.text.WhyAmIGlowingLang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;

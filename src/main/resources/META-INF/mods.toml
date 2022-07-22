@@ -19,7 +19,8 @@ A Minecraft mod that adds semi-realistic radiation simulation.
 [[dependencies.whyamiglowing]]
 modId = "forge"
 mandatory = true
-versionRange = "[${forgeversion},)"
+#versionRange = "[${forgeversion},)"
+versionRange = "[41.0.63,)"
 ordering = "NONE"
 side = "BOTH"
 

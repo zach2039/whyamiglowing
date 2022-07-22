@@ -3,7 +3,6 @@ package com.zach2039.whyamiglowing.data;
 import com.zach2039.whyamiglowing.WhyAmIGlowing;
 import com.zach2039.whyamiglowing.init.ModItems;
 import com.zach2039.whyamiglowing.util.RegistryUtil;
-import com.zach2039.whyamiglowing.world.item.GeigerCounterItem;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;

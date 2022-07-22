@@ -2,13 +2,8 @@ package com.zach2039.whyamiglowing.capability.chunkradiation;
 
 import com.zach2039.whyamiglowing.WhyAmIGlowing;
 import com.zach2039.whyamiglowing.api.capability.chunkradiation.IChunkRadiation;
-import com.zach2039.whyamiglowing.api.capability.radiation.IRadiation;
 import com.zach2039.whyamiglowing.capability.SerializableCapabilityProvider;
-import com.zach2039.whyamiglowing.capability.radiation.Radiation;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.LazyOptional;

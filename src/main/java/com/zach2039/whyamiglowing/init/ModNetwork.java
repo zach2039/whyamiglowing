@@ -23,7 +23,7 @@ public class ModNetwork {
 		channel.messageBuilder(UpdateRadiationMessage.class, id++)
 				.decoder(UpdateRadiationMessage::decode)
 				.encoder(UpdateRadiationMessage::encode)
-				.consumerMainThread(UpdateRadiationMessage::handle)
+				.consumer(UpdateRadiationMessage::handle)
 				.add();
 
 		return channel;

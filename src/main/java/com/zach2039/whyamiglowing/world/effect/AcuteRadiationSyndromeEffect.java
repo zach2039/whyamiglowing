@@ -5,8 +5,6 @@ import com.zach2039.whyamiglowing.core.SicknessSeverity;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 
-import javax.print.attribute.standard.Severity;
-
 public class AcuteRadiationSyndromeEffect extends WhyAmIGlowingMobEffect {
 
 	public AcuteRadiationSyndromeEffect() {

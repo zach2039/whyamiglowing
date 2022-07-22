@@ -30,7 +30,7 @@ public class ModDataProviders {
 
 		dataGenerator.addProvider(event.includeClient(), new WhyAmIGlowingBlockStateProvider(dataGenerator, itemModelProvider.existingFileHelper));
 
-		//dataGenerator.addProvider(event.includeServer(), new WhyAmIGlowingRecipeProvider(dataGenerator));
+		dataGenerator.addProvider(event.includeServer(), new WhyAmIGlowingRecipeProvider(dataGenerator));
 		//dataGenerator.addProvider(event.includeServer(), new WhyAmIGlowingLootTableProvider(dataGenerator));
 		//dataGenerator.addProvider(event.includeServer(), new WhyAmIGlowingWorldgenRegistryDumpReport(dataGenerator));
 		//dataGenerator.addProvider(event.includeServer(), new WhyAmIGlowingLootModifierProvider(dataGenerator));

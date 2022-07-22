@@ -1,16 +1,13 @@
 package com.zach2039.whyamiglowing.compat.ftbic;
 
-import com.zach2039.whyamiglowing.api.capability.radiation.IRadiation;
 import com.zach2039.whyamiglowing.api.capability.radiationsource.IRadiationSource;
 import com.zach2039.whyamiglowing.capability.radiationsource.RadiationSourceCapability;
 import com.zach2039.whyamiglowing.core.RadiationHelper;
 import com.zach2039.whyamiglowing.util.CapabilityNotPresentException;
 import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
-import dev.ftb.mods.ftbic.item.FTBICItems;
 import dev.ftb.mods.ftbic.item.reactor.ReactorPlatingItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.chunk.LevelChunk;
 
 public class FTBICInteropImpl implements IFTBICInterop {
 

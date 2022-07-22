@@ -2,14 +2,10 @@ package com.zach2039.whyamiglowing.init;
 
 import com.zach2039.whyamiglowing.WhyAmIGlowing;
 import com.zach2039.whyamiglowing.world.block.FalloutLayerBlock;
-import com.zach2039.whyamiglowing.world.item.GeigerCounterItem;
-import com.zach2039.whyamiglowing.world.item.RadAwayItem;
-import com.zach2039.whyamiglowing.world.item.RadXItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
