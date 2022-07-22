@@ -1,0 +1,143 @@
+plugins {
+    id "dev.architectury.loom" version "0.11.0-SNAPSHOT"
+    id "maven-publish"
+}
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = 17
+
+archivesBaseName = project.archives_base_name
+version = project.mod_version
+group = project.maven_group
+
+loom {
+    silentMojangMappingsLicense()
+
+    forge {
+        mixinConfigs = [
+        ]
+
+        dataGen {
+            mod project.mod_id
+        }
+    }
+
+    launches {
+		client {
+			property 'forge.logging.console.level', 'debug'
+		}
+		server {
+			property 'forge.logging.console.level', 'debug'
+		}
+        data {
+            arg "--existing", file("src/main/resources").absolutePath
+			property 'forge.logging.console.level', 'debug'
+        }
+
+    }
+}
+
+repositories {
+	maven { // Mixins
+		url = "https://repo.spongepowered.org/repository/maven-public/"
+	}
+	maven { // JEI & Tinkers
+        name 'DVS1 Maven FS'
+        url 'https://dvs1.progwml6.com/files/maven'
+    }
+    maven { // Mirror for JEI
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
+	maven {
+		url "https://maven.architectury.dev/"
+		content {
+			includeGroup "dev.architectury"
+			includeGroup "me.shedaniel"
+			includeGroup "me.shedaniel.cloth"
+		}
+	}
+	maven { // FTB
+		url "https://maven.saps.dev/minecraft"
+		content {
+			includeGroup "dev.latvian.mods"
+			includeGroup "dev.ftb.mods"
+			includeGroup "io.alwa.mods"
+		}
+	}
+	mavenLocal()
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+
+	mappings loom.layered() {
+		officialMojangMappings()
+		//parchment("org.parchmentmc.data:parchment-1.18.2:2022.07.03")
+	}
+
+    forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+
+    modApi("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config_version}")
+    modApi("dev.architectury:architectury-forge:${project.architectury_version}")
+
+    modLocalRuntime modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${project.rei_version}")
+    modLocalRuntime modCompileOnly("me.shedaniel:RoughlyEnoughItems-plugin-compatibilities-forge:${project.rei_version}")
+    modLocalRuntime modCompileOnly("dev.ftb.mods:ftb-industrial-contraptions:${project.ftbic_version}")
+    modLocalRuntime("io.alwa.mods:myrtrees-forge:${project.myrtrees_version}")
+}
+
+processResources {
+	exclude ".cache"
+
+    inputs.property "version", project.version
+
+    filesMatching("META-INF/mods.toml") {
+        expand "forgeshortversion": project.forge_version.split("\\.")[0],
+            "version": project.version,
+            "forgeversion": project.forge_version,
+            "mcversion": project.minecraft_version,
+		    "ftbicversion": project.ftbic_version
+    }
+}
+
+compileJava {
+    options.encoding = "UTF-8"
+    options.release = 17
+}
+
+java {
+    withSourcesJar()
+}
+
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : project.mod_id,
+                "Specification-Vendor"    : project.mod_author,
+                "Specification-Version"   : "1",
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : project.version,
+                "Implementation-Vendor"   : project.mod_author,
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+// configure the maven publication
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            // add all the jars that should be included when publishing to maven
+            artifact(remapJar) {
+                builtBy remapJar
+            }
+            artifact(sourcesJar) {
+                builtBy remapSourcesJar
+            }
+        }
+    }
+
+    repositories {
+
+    }
+}

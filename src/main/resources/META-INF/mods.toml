@@ -1,0 +1,38 @@
+modLoader = "javafml"
+loaderVersion = "[${forgeshortversion},)"
+license = "AGPLv3"
+issueTrackerURL="https://github.com/zach2039/whyamiglowing/issues" #optional
+
+[[mods]]
+modId = "whyamiglowing"
+version = "${version}"
+displayName = "Why Am I Glowing?"
+# updateJSONURL="https://changeme.dev/updates.json" #optional
+# displayURL="https://changeme.dev/" #optional
+# logoFile="icon.png" #optional
+# credits="Thanks to Mojang for making this great game" #optional
+authors="Zach2039" #optional
+description = '''
+Adds radiation functionality to other mods.
+'''
+
+[[dependencies.whyamiglowing]]
+modId = "forge"
+mandatory = true
+versionRange = "[${forgeversion},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.whyamiglowing]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[${mcversion},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.whyamiglowing]]
+modId = "ftbic"
+mandatory = false
+versionRange = "[,)"
+ordering = "NONE"
+side = "BOTH"

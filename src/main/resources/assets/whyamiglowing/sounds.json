@@ -1,0 +1,53 @@
+{
+  "geiger_tick.low":
+  {
+    "category": "neutral",
+    "stream": true,
+    "sounds":
+    [
+      "whyamiglowing:geiger_tick_low_0",
+      "whyamiglowing:geiger_tick_low_1"
+    ],
+    "subtitle": "subtitles.whyamiglowing.geiger_tick.low"
+  },
+  "geiger_tick.med":
+  {
+    "category": "neutral",
+    "stream": true,
+    "sounds":
+    [
+      "whyamiglowing:geiger_tick_med"
+    ],
+    "subtitle": "subtitles.whyamiglowing.geiger_tick.med"
+  },
+  "geiger_tick.high":
+  {
+    "category": "neutral",
+    "stream": true,
+    "sounds":
+    [
+      "whyamiglowing:geiger_tick_high"
+    ],
+    "subtitle": "subtitles.whyamiglowing.geiger_tick.high"
+  },
+  "geiger_tick.very_high":
+  {
+    "category": "neutral",
+    "stream": true,
+    "sounds":
+    [
+      "whyamiglowing:geiger_tick_very_high"
+    ],
+    "subtitle": "subtitles.whyamiglowing.geiger_tick.very_high"
+  },
+  "geiger_tick.extreme":
+  {
+    "category": "neutral",
+    "stream": true,
+    "sounds":
+    [
+      "whyamiglowing:geiger_tick_extreme"
+    ],
+    "subtitle": "subtitles.whyamiglowing.geiger_tick.extreme"
+  }
+}

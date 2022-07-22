@@ -1,0 +1,19 @@
+{
+  "values": [
+    "#forge:storage_blocks/iron",
+    "#forge:storage_blocks/gold",
+    "#forge:storage_blocks/copper",
+    "minecraft:waxed_copper_block",
+    "minecraft:exposed_copper",
+    "minecraft:weathered_copper",
+    "minecraft:oxidized_copper",
+    "minecraft:cut_copper",
+    "minecraft:exposed_copper",
+    "minecraft:weathered_copper",
+    "minecraft:oxidized_copper",
+    "minecraft:waxed_cut_copper",
+    "minecraft:waxed_exposed_copper",
+    "minecraft:waxed_weathered_copper",
+    "minecraft:waxed_oxidized_copper"
+  ]
+}
