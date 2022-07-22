@@ -8,6 +8,7 @@
   "item.whyamiglowing.geiger_silent.desc": "Speaker off",
   "item.whyamiglowing.rad_away": "Rad-Away",
   "item.whyamiglowing.rad_x": "Rad-X",
+  "itemGroup.whyamiglowing": "Why Am I Glowing?",
   "message.whyamiglowing.exposure_symptom.0": "You feel sick...",
   "message.whyamiglowing.exposure_symptom.1": "Your head hurts...",
   "message.whyamiglowing.exposure_symptom.2": "You feel dizzy...",

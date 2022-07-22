@@ -7,13 +7,13 @@ issueTrackerURL="https://github.com/zach2039/whyamiglowing/issues" #optional
 modId = "whyamiglowing"
 version = "${version}"
 displayName = "Why Am I Glowing?"
-# updateJSONURL="https://changeme.dev/updates.json" #optional
-# displayURL="https://changeme.dev/" #optional
-# logoFile="icon.png" #optional
-# credits="Thanks to Mojang for making this great game" #optional
+updateJSONURL="https://www.zach2039.com/mods/whyamiglowing/update.json"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/whyamiglowing"
+logoFile="icon.png"
+# credits="" #optional
 authors="Zach2039" #optional
 description = '''
-Adds radiation functionality to other mods.
+A Minecraft mod that adds semi-realistic radiation simulation.
 '''
 
 [[dependencies.whyamiglowing]]
@@ -33,6 +33,6 @@ side = "BOTH"
 [[dependencies.whyamiglowing]]
 modId = "ftbic"
 mandatory = false
-versionRange = "[,)"
+versionRange = "[1900,)"
 ordering = "NONE"
 side = "BOTH"
