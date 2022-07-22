@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:honey_bottle"
+    },
+    "G": {
+      "item": "minecraft:golden_apple"
+    },
+    "M": {
+      "item": "minecraft:glistering_melon_slice"
+    },
+    "P": {
+      "item": "minecraft:prismarine_crystals"
+    },
+    "T": {
+      "item": "minecraft:ghast_tear"
+    }
+  },
+  "pattern": [
+    " T ",
+    "MBG",
+    " P "
+  ],
+  "result": {
+    "item": "whyamiglowing:rad_away"
+  }
+}
