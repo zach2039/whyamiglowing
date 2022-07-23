@@ -10,7 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 public class AddRadiationCommand {
 	static ArgumentBuilder<CommandSourceStack, ?> register() {
 		return RadiationCommand.create(
-				Commands.literal("add"),
+				Commands.literal("add").requires((sourceStack) -> sourceStack.hasPermission(4)),
 				AddRadiationCommand::addDosageMillirems,
 				WhyAmIGlowingLang.MESSAGE_RADIATION_ADD.getTranslationKey()
 		);

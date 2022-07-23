@@ -83,7 +83,7 @@ public final class RadiationSourceCapability {
 			radiationSource.setEmittedMilliremsPerSecond(intensity);
 			radiationSource.setMaxEmittedMilliremsPerSecond(intensity);
 
-			WhyAmIGlowing.LOGGER.info("Added item of item " + item.getDescriptionId() + " as radiation source of intensity " + intensity + " rem/s, which matches tag/item " + itemKey + " in config.");
+			WhyAmIGlowing.LOGGER.debug("Added item of item " + item.getDescriptionId() + " as radiation source of intensity " + intensity + " rem/s, which matches tag/item " + itemKey + " in config.");
 
 			return radiationSource;
 		}
@@ -115,7 +115,6 @@ public final class RadiationSourceCapability {
 		}
 
 		if (blockKey.isEmpty()) {
-			WhyAmIGlowing.LOGGER.info("Failed to add blockstate");
 			return null;
 		}
 
@@ -133,7 +132,7 @@ public final class RadiationSourceCapability {
 			radiationSource.setEmittedMilliremsPerSecond(intensity);
 			radiationSource.setMaxEmittedMilliremsPerSecond(intensity);
 
-			WhyAmIGlowing.LOGGER.info("Added block of blockstate " + blockState.getBlock().getDescriptionId() + " as radiation source of intensity " + intensity + " rem/s, which matches tag/block " + blockKey + " in config.");
+			WhyAmIGlowing.LOGGER.debug("Added block of blockstate " + blockState.getBlock().getDescriptionId() + " as radiation source of intensity " + intensity + " rem/s, which matches tag/block " + blockKey + " in config.");
 
 			return radiationSource;
 		}

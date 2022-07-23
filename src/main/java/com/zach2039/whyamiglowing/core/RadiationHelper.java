@@ -196,10 +196,10 @@ public class RadiationHelper {
 					WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_4.getTranslationKey(), radiationResistance
 			).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
 
-			WhyAmIGlowing.LOGGER.info("Entity : " + target.getName());
-			WhyAmIGlowing.LOGGER.info("       absorbed : " + radiation.getAbsorbedDoseMillirems());
-			WhyAmIGlowing.LOGGER.info("       current  : " + radiation.getCurrentExposureMilliremsPerSecond());
-			WhyAmIGlowing.LOGGER.info("       resist   : " + radiation.getRadiationResistance());
+			WhyAmIGlowing.LOGGER.debug("Entity : " + target.getName());
+			WhyAmIGlowing.LOGGER.debug("       absorbed : " + radiation.getAbsorbedDoseMillirems());
+			WhyAmIGlowing.LOGGER.debug("       current  : " + radiation.getCurrentExposureMilliremsPerSecond());
+			WhyAmIGlowing.LOGGER.debug("       resist   : " + radiation.getRadiationResistance());
 		}
 	}
 

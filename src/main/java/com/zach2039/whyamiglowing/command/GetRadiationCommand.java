@@ -19,7 +19,7 @@ public class GetRadiationCommand {
 	private static final SimpleCommandExceptionType INVALID_ENTITY_EXCEPTION = new SimpleCommandExceptionType(Component.translatable("commands.whyamiglowing.radiation.invalid_entity"));
 
 	static ArgumentBuilder<CommandSourceStack, ?> register() {
-		return Commands.literal("get")
+		return Commands.literal("get").requires((sourceStack) -> sourceStack.hasPermission(4))
 				.then(Commands.argument("entity", EntityArgument.entity())
 						.executes(context ->
 								execute(

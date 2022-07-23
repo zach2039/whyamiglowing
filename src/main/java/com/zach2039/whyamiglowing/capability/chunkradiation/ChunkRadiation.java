@@ -36,7 +36,7 @@ public class ChunkRadiation implements IChunkRadiation, INBTSerializable<Compoun
 		for (BlockPos blockPos : this.radiationSources.keySet()) {
 			RadiationSource radiationSource = this.radiationSources.get(blockPos);
 			listTag.add(radiationSource.serializeNBT());
-			WhyAmIGlowing.LOGGER.info("Saved radiation source to disk: " + blockPos + "/" + radiationSource);
+			WhyAmIGlowing.LOGGER.debug("Saved radiation source to disk: " + blockPos + "/" + radiationSource);
 		}
 		tag.put("radiationSources", listTag);
 
@@ -52,7 +52,7 @@ public class ChunkRadiation implements IChunkRadiation, INBTSerializable<Compoun
 			RadiationSource source = new RadiationSource();
 			source.deserializeNBT((CompoundTag) tagItem);
 			this.radiationSources.put(source.getBlockPos(), source);
-			WhyAmIGlowing.LOGGER.info("Loaded radiation source from disk: " + source.getBlockPos() + "/" + source);
+			WhyAmIGlowing.LOGGER.debug("Loaded radiation source from disk: " + source.getBlockPos() + "/" + source);
 		}
 	}
 }

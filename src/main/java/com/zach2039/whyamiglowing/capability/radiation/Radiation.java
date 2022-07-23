@@ -29,6 +29,7 @@ public class Radiation implements IRadiation, INBTSerializable<CompoundTag> {
 
 	public Radiation(@Nullable final LivingEntity livingEntity) {
 		this.livingEntity = livingEntity;
+		onChanged(); // think we need this or else client gets no update
 	}
 
 	@Override
