@@ -4,6 +4,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
@@ -15,8 +16,20 @@ public class WhyAmIGlowingConfig {
 	public static class Client {
 		public final HUDPos geigerCounterHudPos;
 
+		public final BooleanValue geigerCounterTextHud;
+
+		public final DoubleValue geigerCounterHudScale;
+
 		Client(final ForgeConfigSpec.Builder builder) {
-			builder.comment("Server Config Settings").push("server");
+			builder.comment("Client Config Settings").push("client");
+
+			geigerCounterTextHud = builder
+					.comment("Selects between graphical and text geiger counter overlay.")
+					.define("geigerCounterTextHud", false);
+
+			geigerCounterHudScale = builder
+					.comment("Selects between graphical and text geiger counter overlay.")
+					.defineInRange("geigerCounterHudScale", 0.5f, 0.01f, 10f);
 
 			geigerCounterHudPos = new HUDPos(
 					builder,
@@ -65,7 +78,7 @@ public class WhyAmIGlowingConfig {
 
 		public final IntValue radiationSourceBlockChunkMaxRadius;
 
-		public final ForgeConfigSpec.BooleanValue allowRadiationShieldingWithBlocks;
+		public final BooleanValue allowRadiationShieldingWithBlocks;
 
 		public final IntValue radiationShieldingScanDistance;
 
@@ -75,18 +88,12 @@ public class WhyAmIGlowingConfig {
 
 		public final DoubleValue lightRadiationShieldingReductionFactor;
 
-		public final ConfigValue<List<String>> veryLowResistanceEquipment;
-		public final ConfigValue<List<String>> lowResistanceEquipment;
-		public final ConfigValue<List<String>> medResistanceEquipment;
-		public final ConfigValue<List<String>> highResistanceEquipment;
-		public final ConfigValue<List<String>> veryHighResistanceEquipment;
-
 		public final DoubleValue veryLowResistanceEquipmentBonus;
 		public final DoubleValue lowResistanceEquipmentBonus;
-		public final DoubleValue medResistanceEquipmentBonus;
+		public final DoubleValue mediumResistanceEquipmentBonus;
 		public final DoubleValue highResistanceEquipmentBonus;
 		public final DoubleValue veryHighResistanceEquipmentBonus;
-
+		public final DoubleValue fullHazmatEquipmentResistanceBonus;
 		public final DoubleValue maxRadiationResistanceBonus;
 
 		public final DoubleValue passiveDoseReductionMilliremPerHour;
@@ -102,6 +109,12 @@ public class WhyAmIGlowingConfig {
 		public final IntValue radXMaxLevel;
 
 		public final IntValue radXDurationTicks;
+
+		public final BooleanValue regenerationEffectStopsSlightMildARSSymptoms;
+
+		public final BooleanValue regenerationEffectSpeedsUpARSRecovery;
+
+		public final ConfigValue<List<String>> livingEntitiesImmuneToRadiationSickness;
 
 		Server(final ForgeConfigSpec.Builder builder) {
 			builder.comment("Server Config Settings").push("server");
@@ -189,44 +202,6 @@ public class WhyAmIGlowingConfig {
 					.comment("Radiation received will be calculated as R = Rorig * (1 / (1 + factor)).")
 					.defineInRange("heavyRadiationShieldingReductionFactor", 100f, 0f, Float.MAX_VALUE);
 
-
-			veryLowResistanceEquipment = builder
-					.comment("A list of armor items that give a very low radiation resistance boost.")
-					.define("veryLowResistanceEquipment", Arrays.asList(
-							"minecraft:leather_helmet",
-							"minecraft:leather_chestplate",
-							"minecraft:leather_leggings",
-							"minecraft:leather_boots"
-							));
-
-			lowResistanceEquipment = builder
-					.comment("A list of armor items that give a low radiation resistance boost.")
-					.define("lowResistanceEquipment", Arrays.asList(
-							"minecraft:iron_helmet",
-							"minecraft:iron_chestplate",
-							"minecraft:iron_leggings",
-							"minecraft:iron_boots"
-					));
-
-			medResistanceEquipment = builder
-					.comment("A list of armor items that give a medium radiation resistance boost.")
-					.define("medResistanceEquipment", Arrays.asList(
-							"minecraft:golden_helmet",
-							"minecraft:golden_chestplate",
-							"minecraft:golden_leggings",
-							"minecraft:golden_boots"
-					));
-
-			highResistanceEquipment = builder
-					.comment("A list of armor items that give a high radiation resistance boost.")
-					.define("highResistanceEquipment", Arrays.asList(
-					));
-
-			veryHighResistanceEquipment = builder
-					.comment("A list of armor items that give a high radiation resistance boost.")
-					.define("veryHighResistanceEquipment", Arrays.asList(
-					));
-
 			veryLowResistanceEquipmentBonus = builder
 					.comment("The bonus to radiation resistance that very low resistance equipment gives.")
 					.defineInRange("veryLowResistanceEquipmentBonus", 0.05f, 0.0f, 1.0f)
@@ -237,9 +212,9 @@ public class WhyAmIGlowingConfig {
 					.defineInRange("lowResistanceEquipmentBonus", 0.10f, 0.0f, 1.0f)
 					;
 
-			medResistanceEquipmentBonus = builder
+			mediumResistanceEquipmentBonus = builder
 					.comment("The bonus to radiation resistance that medium resistance equipment gives.")
-					.defineInRange("medResistanceEquipmentBonus", 0.15f, 0.0f, 1.0f)
+					.defineInRange("mediumResistanceEquipmentBonus", 0.15f, 0.0f, 1.0f)
 					;
 
 			highResistanceEquipmentBonus = builder
@@ -250,6 +225,11 @@ public class WhyAmIGlowingConfig {
 			veryHighResistanceEquipmentBonus = builder
 					.comment("The bonus to radiation resistance that very high resistance equipment gives.")
 					.defineInRange("veryHighResistanceEquipmentBonus", 0.25f, 0.0f, 1.0f)
+					;
+
+			fullHazmatEquipmentResistanceBonus = builder
+					.comment("The bonus to radiation resistance that wearing full hazmat set will provide .")
+					.defineInRange("fullHazmatEquipmentResistanceBonus", 0.10f, 0.0f, 1.0f)
 					;
 
 			maxRadiationResistanceBonus = builder
@@ -284,6 +264,65 @@ public class WhyAmIGlowingConfig {
 			radXDurationTicks = builder
 					.comment("The duration of Rad-X when applied.")
 					.defineInRange("radXDurationTicks", 12000, 0, Integer.MAX_VALUE);
+
+			regenerationEffectStopsSlightMildARSSymptoms = builder
+					.comment("Whether slight and mild radiation sickness can have symptoms reduced by having an active regeneration effect.")
+					.define("regenerationEffectStopsSlightMildARSSymptoms", true);
+
+			regenerationEffectSpeedsUpARSRecovery = builder
+					.comment("Whether radiation sickness recovery speeds up when having an active regeneration effect.")
+					.define("regenerationEffectSpeedsUpARSRecovery", true);
+
+			livingEntitiesImmuneToRadiationSickness = builder
+					.comment("A list of living entities that are immune to the effects of radiation sickness. Partial matches are possible with items preceeded with a # symbol")
+					.define("livingEntitiesImmuneToRadiationSickness", Arrays.asList(
+							"entity.minecraft.iron_golem",
+							"entity.minecraft.skeleton_horse",
+							"entity.minecraft.zombie_horse",
+							"entity.minecraft.snow_golem",
+							"entity.minecraft.mooshroom",
+							"entity.minecraft.guardian",
+							"entity.minecraft.elder_guardian",
+							"entity.minecraft.vex",
+							"entity.minecraft.allay",
+							"entity.minecraft.slime",
+							"entity.minecraft.phantom",
+							"entity.minecraft.zombie",
+							"entity.minecraft.zombie_villager",
+							"entity.minecraft.husk",
+							"entity.minecraft.drowned",
+							"entity.minecraft.giant",
+							"entity.minecraft.skeleton",
+							"entity.minecraft.stray",
+							"entity.minecraft.wither",
+							"entity.minecraft.wither_skeleton",
+							"entity.minecraft.warden",
+							"entity.minecraft.blaze",
+							"entity.minecraft.magma_cube",
+							"entity.minecraft.ghast",
+							"entity.minecraft.zombified_piglin",
+							"entity.minecraft.zoglin",
+							"entity.quark.wraith",
+							"entity.quark.forgotten",
+							"entity.quark.stoneling",
+							"entity.earthmobsmod.bone_spider",
+							"entity.earthmobsmod.stray_bone_spider",
+							"entity.earthmobsmod.bouldering_zombie",
+							"entity.earthmobsmod.lobber_zombie",
+							"entity.earthmobsmod.bouldering_drowned",
+							"entity.earthmobsmod.lobber_drowned",
+							"entity.earthmobsmod.tropical_slime",
+							"entity.earthmobsmod.skeleton_wolf",
+							"entity.alexmobs.bone_serpent",
+							"entity.alexmobs.bone_serpent_part",
+							"entity.alexmobs.cockroach",
+							"entity.alexmobs.cockroach_egg",
+							"entity.alexmobs.soul_vulture",
+							"entity.alexmobs.spectre",
+							"entity.alexmobs.guster",
+							"entity.alexmobs.skelewag",
+							"#copper_golem"
+					));
 
 			builder.pop();
 		}

@@ -16,13 +16,16 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -31,16 +34,7 @@ import java.util.List;
 
 public class RadiationHelper {
 
-	public static final float TOLERANCE = 0.0001f;
-
 	private static final WhyAmIGlowingConfig.Server serverConfig = WhyAmIGlowingConfig.SERVER;
-
-	public static float getAdjustedFloat(float value) {
-		if (value < TOLERANCE) {
-			return 0f;
-		}
-		return value;
-	}
 
 	public static int getRadiaitonMaxDistance() {
 		return serverConfig.radiationMaxDistance.get();
@@ -52,6 +46,10 @@ public class RadiationHelper {
 
 	public static int getRadiationShieldingScanDistance() {
 		return serverConfig.radiationShieldingScanDistance.get();
+	}
+
+	public static float getFullHazmatEquipmentResistanceBonus() {
+		return serverConfig.fullHazmatEquipmentResistanceBonus.get().floatValue();
 	}
 
 	public static float getLightRadiationShieldingReductionFactor() {
@@ -113,6 +111,13 @@ public class RadiationHelper {
 		return radiationSource;
 	}
 
+	public static boolean tryMatchShielding(TagKey<Item> shieldTag, BlockState blockState) {
+		if (new ItemStack(blockState.getBlock().asItem()).is(shieldTag))
+			return true;
+
+		return false;
+	}
+
 	public static List<BlockState> getShieldBlocksBetween(final Level level, Vec3 start, Vec3 finish) {
 		List<BlockState> blocksBetween = new ArrayList<BlockState>();
 
@@ -128,7 +133,9 @@ public class RadiationHelper {
 			if (pos == new BlockPos(vecFinish))
 				break;
 
-			if (blockState.is(ModTags.Blocks.RADIATION_SHIELDING)) {
+			if (tryMatchShielding(ModTags.Items.RADIATION_SHIELDING, blockState)) {
+				blocksBetween.add(blockState);
+			} else if (blockState.getFluidState().is(Fluids.WATER) && blockState.getFluidState().isSource()) {
 				blocksBetween.add(blockState);
 			}
 
@@ -151,7 +158,7 @@ public class RadiationHelper {
 				if (blockState.isAir())
 					continue;
 
-				if (blockState.is(ModTags.Blocks.RADIATION_SHIELDING)) {
+				if (tryMatchShielding(ModTags.Items.RADIATION_SHIELDING, blockState)) {
 					blocksBetween.add(blockState);
 				}
 			}
@@ -203,32 +210,38 @@ public class RadiationHelper {
 		}
 	}
 
-	public static float getRadiationResistanceOfEquipment(Item item) {
+	public static float getRadiationResistanceOfEquipment(ItemStack itemStack) {
 
-		//WhyAmIGlowing.LOGGER.info(RegistryUtil.getKey(item).toString());
-		//WhyAmIGlowing.LOGGER.info(serverConfig.veryLowResistanceEquipment.get());
-
-		if (serverConfig.veryLowResistanceEquipment.get().contains(RegistryUtil.getKey(item).toString())) {
-			return serverConfig.veryLowResistanceEquipmentBonus.get().floatValue();
-		}
-
-		if (serverConfig.lowResistanceEquipment.get().contains(RegistryUtil.getKey(item).toString())) {
-			return serverConfig.lowResistanceEquipmentBonus.get().floatValue();
-		}
-
-		if (serverConfig.medResistanceEquipment.get().contains(RegistryUtil.getKey(item).toString())) {
-			return serverConfig.medResistanceEquipmentBonus.get().floatValue();
-		}
-
-		if (serverConfig.highResistanceEquipment.get().contains(RegistryUtil.getKey(item).toString())) {
-			return serverConfig.highResistanceEquipmentBonus.get().floatValue();
-		}
-
-		if (serverConfig.veryHighResistanceEquipment.get().contains(RegistryUtil.getKey(item).toString())) {
+		if (itemStack.is(ModTags.Items.VERY_HIGH_RADIATION_PROTECTION_EQUIPMENT)) {
 			return serverConfig.veryHighResistanceEquipmentBonus.get().floatValue();
 		}
 
+		if (itemStack.is(ModTags.Items.HIGH_RADIATION_PROTECTION_EQUIPMENT)) {
+			return serverConfig.highResistanceEquipmentBonus.get().floatValue();
+		}
+
+		if (itemStack.is(ModTags.Items.MEDIUM_RADIATION_PROTECTION_EQUIPMENT)) {
+			return serverConfig.mediumResistanceEquipmentBonus.get().floatValue();
+		}
+
+		if (itemStack.is(ModTags.Items.LOW_RADIATION_PROTECTION_EQUIPMENT)) {
+			return serverConfig.lowResistanceEquipmentBonus.get().floatValue();
+		}
+
+		if (itemStack.is(ModTags.Items.VERY_LOW_RADIATION_PROTECTION_EQUIPMENT)) {
+			return serverConfig.veryLowResistanceEquipmentBonus.get().floatValue();
+		}
+
 		return 0.0f;
+	}
+
+	public static float getHazmatSetBonus(final LivingEntity livingEntity) {
+		for (ItemStack armorSlotItemStack : livingEntity.getArmorSlots()) {
+			if (!armorSlotItemStack.is(ModTags.Items.HAZMAT_GEAR_PIECE))
+				return 0.0f;
+		}
+
+		return RadiationHelper.getFullHazmatEquipmentResistanceBonus();
 	}
 
 	public static float convertMilliremToRem(float millirem) {

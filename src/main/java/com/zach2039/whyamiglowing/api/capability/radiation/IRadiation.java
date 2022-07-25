@@ -14,5 +14,8 @@ public interface IRadiation {
 	float getCurrentExposureMilliremsPerSecond();
 	void setCurrentExposureMilliremsPerSecond(float currentExposureMilliremsPerSecond);
 
+	float getLastExposureMilliremsPerSecond();
+	void setLastExposureMilliremsPerSecond(float lastExposureMilliremsPerSecond);
+
 	void increaseCurrentExposureMilliremsPerSecond(float currentExposureMilliremsPerSecond);
 }

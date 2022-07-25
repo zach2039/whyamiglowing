@@ -2,6 +2,7 @@ package com.zach2039.whyamiglowing.data;
 
 import com.zach2039.whyamiglowing.WhyAmIGlowing;
 import com.zach2039.whyamiglowing.init.ModItems;
+import com.zach2039.whyamiglowing.init.ModTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -79,6 +80,124 @@ public class WhyAmIGlowingRecipeProvider extends RecipeProvider {
 					.unlockedBy("has_glowstone_dust", has(GLOWSTONE_DUST))
 					.unlockedBy("has_prismarine_crystals", has(PRISMARINE_CRYSTALS))
 					.save(recipeConsumer, new ResourceLocation(WhyAmIGlowing.MODID, "rad_x"));
+		}
+
+		// Hazmat Suit MkI
+		{
+			ShapedRecipeBuilder.shaped(ModItems.HAZMAT_RESPIRATOR_MK_1.get())
+					.pattern(" B ")
+					.pattern("ILI")
+					.pattern(" C ")
+					.define('L', Ingredient.of(LEATHER_HELMET))
+					.define('I', Ingredient.of(IRON_INGOT))
+					.define('C', Ingredient.of(CHARCOAL))
+					.define('B', Ingredient.of(IRON_BARS))
+					.unlockedBy("has_leather_helmet", has(LEATHER_HELMET))
+					.unlockedBy("has_iron_ingot", has(IRON_INGOT))
+					.unlockedBy("has_charcoal", has(CHARCOAL))
+					.unlockedBy("has_iron_bars", has(IRON_BARS))
+					.save(recipeConsumer, new ResourceLocation(WhyAmIGlowing.MODID, "hazmat_respirator_mk_1"));
+
+			ShapedRecipeBuilder.shaped(ModItems.HAZMAT_SUIT_TOP_MK_1.get())
+					.pattern(" B ")
+					.pattern("ILI")
+					.pattern(" G ")
+					.define('L', Ingredient.of(LEATHER_CHESTPLATE))
+					.define('I', Ingredient.of(IRON_INGOT))
+					.define('G', Ingredient.of(GOLD_INGOT))
+					.define('B', Ingredient.of(IRON_BARS))
+					.unlockedBy("has_leather_chestplate", has(LEATHER_CHESTPLATE))
+					.unlockedBy("has_iron_ingot", has(IRON_INGOT))
+					.unlockedBy("has_gold_ingot", has(GOLD_INGOT))
+					.unlockedBy("has_iron_bars", has(IRON_BARS))
+					.save(recipeConsumer, new ResourceLocation(WhyAmIGlowing.MODID, "hazmat_suit_top_mk_1"));
+
+			ShapedRecipeBuilder.shaped(ModItems.HAZMAT_SUIT_BOTTOM_MK_1.get())
+					.pattern(" B ")
+					.pattern("ILI")
+					.pattern(" G ")
+					.define('L', Ingredient.of(LEATHER_LEGGINGS))
+					.define('I', Ingredient.of(IRON_INGOT))
+					.define('G', Ingredient.of(GOLD_INGOT))
+					.define('B', Ingredient.of(IRON_BARS))
+					.unlockedBy("has_leather_leggings", has(LEATHER_LEGGINGS))
+					.unlockedBy("has_iron_ingot", has(IRON_INGOT))
+					.unlockedBy("has_gold_ingot", has(GOLD_INGOT))
+					.unlockedBy("has_iron_bars", has(IRON_BARS))
+					.save(recipeConsumer, new ResourceLocation(WhyAmIGlowing.MODID, "hazmat_suit_bottom_mk_1"));
+
+			ShapedRecipeBuilder.shaped(ModItems.HAZMAT_BOOTS_MK_1.get())
+					.pattern(" B ")
+					.pattern("ILI")
+					.pattern(" G ")
+					.define('L', Ingredient.of(LEATHER_BOOTS))
+					.define('I', Ingredient.of(IRON_INGOT))
+					.define('G', Ingredient.of(GOLD_INGOT))
+					.define('B', Ingredient.of(IRON_BARS))
+					.unlockedBy("has_leather_boots", has(LEATHER_BOOTS))
+					.unlockedBy("has_iron_ingot", has(IRON_INGOT))
+					.unlockedBy("has_gold_ingot", has(GOLD_INGOT))
+					.unlockedBy("has_iron_bars", has(IRON_BARS))
+					.save(recipeConsumer, new ResourceLocation(WhyAmIGlowing.MODID, "hazmat_boots_mk_1"));
+		}
+
+		// Hazmat Suit MkII
+		{
+			ShapedRecipeBuilder.shaped(ModItems.HAZMAT_RESPIRATOR_MK_2.get())
+					.pattern(" B ")
+					.pattern("ILI")
+					.pattern(" C ")
+					.define('L', Ingredient.of(IRON_HELMET))
+					.define('I', Ingredient.of(ModTags.Items.LEAD_INGOT))
+					.define('C', Ingredient.of(CHARCOAL))
+					.define('B', Ingredient.of(IRON_BARS))
+					.unlockedBy("has_iron_helmet", has(IRON_HELMET))
+					.unlockedBy("has_lead_ingot", has(IRON_INGOT))
+					.unlockedBy("has_charcoal", has(CHARCOAL))
+					.unlockedBy("has_iron_bars", has(IRON_BARS))
+					.save(recipeConsumer, new ResourceLocation(WhyAmIGlowing.MODID, "hazmat_respirator_mk_2"));
+
+			ShapedRecipeBuilder.shaped(ModItems.HAZMAT_SUIT_TOP_MK_2.get())
+					.pattern(" B ")
+					.pattern("ILI")
+					.pattern(" G ")
+					.define('L', Ingredient.of(IRON_CHESTPLATE))
+					.define('I', Ingredient.of(ModTags.Items.LEAD_INGOT))
+					.define('G', Ingredient.of(GOLD_INGOT))
+					.define('B', Ingredient.of(IRON_BARS))
+					.unlockedBy("has_iron_chestplate", has(IRON_CHESTPLATE))
+					.unlockedBy("has_lead_ingot", has(IRON_INGOT))
+					.unlockedBy("has_gold_ingot", has(GOLD_INGOT))
+					.unlockedBy("has_iron_bars", has(IRON_BARS))
+					.save(recipeConsumer, new ResourceLocation(WhyAmIGlowing.MODID, "hazmat_suit_top_mk_2"));
+
+			ShapedRecipeBuilder.shaped(ModItems.HAZMAT_SUIT_BOTTOM_MK_2.get())
+					.pattern(" B ")
+					.pattern("ILI")
+					.pattern(" G ")
+					.define('L', Ingredient.of(IRON_LEGGINGS))
+					.define('I', Ingredient.of(ModTags.Items.LEAD_INGOT))
+					.define('G', Ingredient.of(GOLD_INGOT))
+					.define('B', Ingredient.of(IRON_BARS))
+					.unlockedBy("has_iron_leggings", has(IRON_LEGGINGS))
+					.unlockedBy("has_lead_ingot", has(ModTags.Items.LEAD_INGOT))
+					.unlockedBy("has_gold_ingot", has(GOLD_INGOT))
+					.unlockedBy("has_iron_bars", has(IRON_BARS))
+					.save(recipeConsumer, new ResourceLocation(WhyAmIGlowing.MODID, "hazmat_suit_bottom_mk_2"));
+
+			ShapedRecipeBuilder.shaped(ModItems.HAZMAT_BOOTS_MK_2.get())
+					.pattern(" B ")
+					.pattern("ILI")
+					.pattern(" G ")
+					.define('L', Ingredient.of(IRON_BOOTS))
+					.define('I', Ingredient.of(ModTags.Items.LEAD_INGOT))
+					.define('G', Ingredient.of(GOLD_INGOT))
+					.define('B', Ingredient.of(IRON_BARS))
+					.unlockedBy("has_iron_boots", has(IRON_BOOTS))
+					.unlockedBy("has_lead_ingot", has(ModTags.Items.LEAD_INGOT))
+					.unlockedBy("has_gold_ingot", has(GOLD_INGOT))
+					.unlockedBy("has_iron_bars", has(IRON_BARS))
+					.save(recipeConsumer, new ResourceLocation(WhyAmIGlowing.MODID, "hazmat_boots_mk_2"));
 		}
 	}
 

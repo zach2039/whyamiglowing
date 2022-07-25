@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "whyamiglowing:item/hazmat_boots_mk_2"
+  }
+}

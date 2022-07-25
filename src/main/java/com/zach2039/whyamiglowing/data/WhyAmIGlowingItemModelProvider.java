@@ -79,7 +79,17 @@ public class WhyAmIGlowingItemModelProvider extends ItemModelProvider {
 
 	@Override
 	protected void registerModels() {
+		// Equipment
 		withGeneratedParentAndDefaultTexture(ModItems.GEIGER_COUNTER.get());
+		withGeneratedParentAndDefaultTexture(ModItems.HAZMAT_RESPIRATOR_MK_1.get());
+		withGeneratedParentAndDefaultTexture(ModItems.HAZMAT_SUIT_TOP_MK_1.get());
+		withGeneratedParentAndDefaultTexture(ModItems.HAZMAT_SUIT_BOTTOM_MK_1.get());
+		withGeneratedParentAndDefaultTexture(ModItems.HAZMAT_BOOTS_MK_1.get());
+		withGeneratedParentAndDefaultTexture(ModItems.HAZMAT_RESPIRATOR_MK_2.get());
+		withGeneratedParentAndDefaultTexture(ModItems.HAZMAT_SUIT_TOP_MK_2.get());
+		withGeneratedParentAndDefaultTexture(ModItems.HAZMAT_SUIT_BOTTOM_MK_2.get());
+		withGeneratedParentAndDefaultTexture(ModItems.HAZMAT_BOOTS_MK_2.get());
+		// Consumables
 		withGeneratedParentAndDefaultTexture(ModItems.RAD_X.get());
 		withGeneratedParentAndDefaultTexture(ModItems.RAD_AWAY.get());
 	}

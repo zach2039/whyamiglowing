@@ -5,5 +5,6 @@ public enum SicknessSeverity {
 	MILD,
 	MODERATE,
 	SEVERE,
-	FATAL
+	FATAL,
+	INSTANT_DEATH
 }

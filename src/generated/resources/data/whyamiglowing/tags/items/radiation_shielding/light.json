@@ -1,9 +1,52 @@
 {
   "values": [
+    {
+      "id": "#forge:storage_blocks/tin",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/chromium",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/zinc",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/antimony",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/aluminium",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/aluminum",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/bronze",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/brass",
+      "required": false
+    },
+    {
+      "id": "#factorymade:cinder_block_bricks_blocks/any",
+      "required": false
+    },
+    {
+      "id": "#factorymade:concrete_siding_blocks/any",
+      "required": false
+    },
+    {
+      "id": "#factorymade:asphalt_blocks/any",
+      "required": false
+    },
     "#forge:stone",
     "#forge:cobblestone",
     "#forge:storage_blocks/quartz",
-    "minecraft:water",
     "minecraft:bricks",
     "minecraft:stone_bricks",
     "minecraft:mossy_stone_bricks",

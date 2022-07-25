@@ -1,0 +1,58 @@
+{
+  "values": [
+    {
+      "id": "#forge:storage_blocks/nickel",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/cobalt",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/cadmium",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/steel",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/constantan",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/invar",
+      "required": false
+    },
+    {
+      "id": "#factorymade:plate_blocks/iron",
+      "required": false
+    },
+    {
+      "id": "#factorymade:non_slip_walkway_blocks/iron",
+      "required": false
+    },
+    {
+      "id": "#factorymade:truss_blocks/iron",
+      "required": false
+    },
+    {
+      "id": "ftbic:reinforced_glass",
+      "required": false
+    },
+    "#forge:storage_blocks/iron",
+    "#forge:storage_blocks/copper",
+    "minecraft:waxed_copper_block",
+    "minecraft:exposed_copper",
+    "minecraft:weathered_copper",
+    "minecraft:oxidized_copper",
+    "minecraft:cut_copper",
+    "minecraft:exposed_copper",
+    "minecraft:weathered_copper",
+    "minecraft:oxidized_copper",
+    "minecraft:waxed_cut_copper",
+    "minecraft:waxed_exposed_copper",
+    "minecraft:waxed_weathered_copper",
+    "minecraft:waxed_oxidized_copper"
+  ]
+}

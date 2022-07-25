@@ -4,6 +4,7 @@ import com.zach2039.whyamiglowing.WhyAmIGlowing;
 import com.zach2039.whyamiglowing.api.capability.radiationsource.IRadiationSource;
 import com.zach2039.whyamiglowing.capability.radiationsource.RadiationSourceCapability;
 import com.zach2039.whyamiglowing.core.RadiationHelper;
+import com.zach2039.whyamiglowing.init.ModTags;
 import com.zach2039.whyamiglowing.util.CapabilityNotPresentException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -38,13 +39,21 @@ public class ItemEventHandler {
 	public static void applyRadiationResistanceToArmorTooltip(final ItemTooltipEvent event) {
 		ItemStack itemStack = event.getItemStack();
 
-		float radiationResistance = RadiationHelper.getRadiationResistanceOfEquipment(itemStack.getItem());
+		float radiationResistance = RadiationHelper.getRadiationResistanceOfEquipment(itemStack);
+
 
 		if (radiationResistance == 0f)
 			return;
 
 		String radiationResistancePercentage = String.format("-%.1f%%", radiationResistance * 100f);
+		String radiationResistancePercentageSetBonus = "";
+
+		if (itemStack.is(ModTags.Items.HAZMAT_GEAR_PIECE)) {
+			float radiationResistanceHazmatSetBonus = RadiationHelper.getFullHazmatEquipmentResistanceBonus();
+			radiationResistancePercentageSetBonus = String.format(" (-%.1f%% set bonus)", radiationResistanceHazmatSetBonus * 100f);
+		}
+
 		event.getToolTip().add(Component.literal(""));
-		event.getToolTip().add(Component.literal("☢: " + radiationResistancePercentage).withStyle(ChatFormatting.DARK_GREEN));
+		event.getToolTip().add(Component.literal("☢: " + radiationResistancePercentage + radiationResistancePercentageSetBonus).withStyle(ChatFormatting.DARK_GREEN));
 	}
 }

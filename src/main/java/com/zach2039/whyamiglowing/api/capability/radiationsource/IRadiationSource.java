@@ -18,6 +18,6 @@ public interface IRadiationSource {
 	void setEmittedMilliremsPerSecond(float emittedMilliremsPerSecond);
 	float getMaxEmittedMilliremsPerSecond();
 	void setMaxEmittedMilliremsPerSecond(float maxEmittedMilliremsPerSecond);
-	void irradiateLivingEntity(Level level, Entity sourceEntity, LivingEntity livingEntity);
-	void irradiateLivingEntity(Level level, BlockPos blockPos, LivingEntity livingEntity);
+	float irradiateLivingEntity(Level level, Entity sourceEntity, LivingEntity livingEntity);
+	float irradiateLivingEntity(Level level, BlockPos blockPos, LivingEntity livingEntity);
 }

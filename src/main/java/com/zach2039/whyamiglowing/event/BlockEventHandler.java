@@ -7,7 +7,6 @@ import com.zach2039.whyamiglowing.capability.chunkradiation.ChunkRadiationCapabi
 import com.zach2039.whyamiglowing.capability.radiationsource.RadiationSource;
 import com.zach2039.whyamiglowing.capability.radiationsource.RadiationSourceCapability;
 import com.zach2039.whyamiglowing.util.CapabilityNotPresentException;
-import dev.architectury.event.events.common.InteractionEvent;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.util.LazyOptional;

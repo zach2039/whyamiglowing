@@ -12,14 +12,6 @@ import net.minecraftforge.versions.forge.ForgeVersion;
 public class ModTags {
 	public static class Blocks {
 
-		public static final TagKey<Block> RADIATION_SHIELDING = tag("radiation_shielding/any");
-
-		public static final TagKey<Block> LIGHT_RADIATION_SHIELDING = tag("radiation_shielding/light");
-
-		public static final TagKey<Block> MEDIUM_RADIATION_SHIELDING = tag("radiation_shielding/medium");
-
-		public static final TagKey<Block> HEAVY_RADIATION_SHIELDING = tag("radiation_shielding/heavy");
-
 		private static TagKey<Block> tag(final String name) {
 			return BlockTags.create(new ResourceLocation(WhyAmIGlowing.MODID, name));
 		}
@@ -29,6 +21,24 @@ public class ModTags {
 		public static final TagKey<Item> FUEL_ROD_URANIUM = tag("fuel_rod/uranium");
 		public static final TagKey<Item> DUAL_FUEL_ROD_URANIUM = tag("dual_fuel_rod/uranium");
 		public static final TagKey<Item> QUAD_FUEL_ROD_URANIUM = tag("quad_fuel_rod/uranium");
+
+		public static final TagKey<Item> RADIATION_SHIELDING = tag("radiation_shielding/any");
+
+		public static final TagKey<Item> LIGHT_RADIATION_SHIELDING = tag("radiation_shielding/light");
+
+		public static final TagKey<Item> MEDIUM_RADIATION_SHIELDING = tag("radiation_shielding/medium");
+
+		public static final TagKey<Item> HEAVY_RADIATION_SHIELDING = tag("radiation_shielding/heavy");
+
+		public static final TagKey<Item> VERY_LOW_RADIATION_PROTECTION_EQUIPMENT = tag("radiation_protection_equipment/very_low");
+		public static final TagKey<Item> LOW_RADIATION_PROTECTION_EQUIPMENT = tag("radiation_protection_equipment/low");
+		public static final TagKey<Item> MEDIUM_RADIATION_PROTECTION_EQUIPMENT = tag("radiation_protection_equipment/medium");
+		public static final TagKey<Item> HIGH_RADIATION_PROTECTION_EQUIPMENT = tag("radiation_protection_equipment/high");
+		public static final TagKey<Item> VERY_HIGH_RADIATION_PROTECTION_EQUIPMENT = tag("radiation_protection_equipment/very_high");
+
+		public static final TagKey<Item> HAZMAT_GEAR_PIECE = tag("hazmat_gear_piece");
+
+		public static final TagKey<Item> LEAD_INGOT = forgeTag("ingots/lead");
 
 		private static TagKey<Item> tag(final String name) {
 			return ItemTags.create(new ResourceLocation(WhyAmIGlowing.MODID, name));

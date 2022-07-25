@@ -88,7 +88,18 @@ public class WhyAmIGlowingLanguageProvider extends LanguageProvider {
 	}
 
 	private void addItems() {
+		// Equipment
 		addItem(ModItems.GEIGER_COUNTER, "Geiger Counter");
+		addItem(ModItems.HAZMAT_RESPIRATOR_MK_1, "Hazmat Respirator MkI");
+		addItem(ModItems.HAZMAT_SUIT_TOP_MK_1, "Hazmat Suit Top MkI");
+		addItem(ModItems.HAZMAT_SUIT_BOTTOM_MK_1, "Hazmat Suit Bottom MkI");
+		addItem(ModItems.HAZMAT_BOOTS_MK_1, "Hazmat Boots MkI");
+		addItem(ModItems.HAZMAT_RESPIRATOR_MK_2, "Hazmat Respirator MkII");
+		addItem(ModItems.HAZMAT_SUIT_TOP_MK_2, "Hazmat Suit Top MkII");
+		addItem(ModItems.HAZMAT_SUIT_BOTTOM_MK_2, "Hazmat Suit Bottom MkII");
+		addItem(ModItems.HAZMAT_BOOTS_MK_2, "Hazmat Boots MkII");
+
+		// Consumables
 		addItem(ModItems.RAD_X, "Rad-X");
 		addItem(ModItems.RAD_AWAY, "Rad-Away");
 	}

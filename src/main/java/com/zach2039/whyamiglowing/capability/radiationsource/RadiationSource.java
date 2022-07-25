@@ -1,21 +1,29 @@
 package com.zach2039.whyamiglowing.capability.radiationsource;
 
+import com.mojang.datafixers.types.templates.Tag;
 import com.zach2039.whyamiglowing.api.capability.radiation.IRadiation;
 import com.zach2039.whyamiglowing.api.capability.radiationsource.IRadiationSource;
 import com.zach2039.whyamiglowing.capability.radiation.RadiationCapability;
 import com.zach2039.whyamiglowing.core.RadiationHelper;
 import com.zach2039.whyamiglowing.init.ModTags;
 import com.zach2039.whyamiglowing.util.CapabilityNotPresentException;
+import com.zach2039.whyamiglowing.util.MathHelper;
 import com.zach2039.whyamiglowing.util.RegistryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -75,35 +83,42 @@ public class RadiationSource implements IRadiationSource, INBTSerializable<Compo
 
 	@Override
 	public float getEmittedMilliremsPerSecond() {
-		return this.emittedMilliremsPerSecond;
+		return MathHelper.tol(this.emittedMilliremsPerSecond);
 	}
 
 	@Override
 	public void setEmittedMilliremsPerSecond(float emittedMilliremsPerSecond) {
-		this.emittedMilliremsPerSecond = RadiationHelper.getAdjustedFloat(emittedMilliremsPerSecond);
+		this.emittedMilliremsPerSecond = MathHelper.tol(emittedMilliremsPerSecond);
 	}
 
 	@Override
 	public float getMaxEmittedMilliremsPerSecond() {
-		return this.maxEmittedMilliremsPerSecond;
+		return MathHelper.tol(this.maxEmittedMilliremsPerSecond);
 	}
 
 	@Override
 	public void setMaxEmittedMilliremsPerSecond(float maxEmittedMilliremsPerSecond) {
-		this.maxEmittedMilliremsPerSecond = RadiationHelper.getAdjustedFloat(maxEmittedMilliremsPerSecond);
+		this.maxEmittedMilliremsPerSecond = MathHelper.tol(maxEmittedMilliremsPerSecond);
 	}
 
+
+
 	@Override
-	public void irradiateLivingEntity(final Level level, final BlockPos blockPos, final LivingEntity livingEntity) {
+	public float irradiateLivingEntity(final Level level, final BlockPos blockPos, final LivingEntity livingEntity) {
 		BlockPos posEntity = livingEntity.blockPosition();
 		BlockPos posSource = blockPos;
 		double distanceToSource = posSource.distSqr(posEntity);
+		float totalDose = 0f;
 
 		if (livingEntity.getCapability(RadiationCapability.RADIATION_CAPABILITY).isPresent()) {
 			IRadiation radiation = livingEntity.getCapability(RadiationCapability.RADIATION_CAPABILITY).orElseThrow(CapabilityNotPresentException::new);
 			float intensityAt1Meter = this.emittedMilliremsPerSecond;
+
+			if (!(intensityAt1Meter > 0f))
+				return totalDose; // dont irradiate if no output exposure
+
 			float intensityAt1MeterMilliremsPerHour = RadiationHelper.convertPerSecondToPerHour(intensityAt1Meter);
-			float intensityAtEntity = (float) Math.min(intensityAt1Meter, (intensityAt1Meter * (1f / Math.pow(distanceToSource, 2))));
+			float intensityAtEntity = MathHelper.tol((float) Math.min(intensityAt1Meter, (intensityAt1Meter * (1f / Math.pow(distanceToSource, 2)))));
 
 			// Get blocks between entity and source. and reduce exposure based on list
 			List<BlockState> blocksBetween = new ArrayList<>();
@@ -111,15 +126,23 @@ public class RadiationSource implements IRadiationSource, INBTSerializable<Compo
 			if (intensityAt1MeterMilliremsPerHour > 5f) { // Dont try to block anything under 5mrem/h
 				blocksBetween = RadiationHelper.getShieldBlocksBetween(level, new Vec3(blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5), livingEntity.position().add(0f, livingEntity.getEyeHeight() / 2f, 0.5f));
 				for (BlockState blockstate : blocksBetween) {
-					if (blockstate.is(ModTags.Blocks.HEAVY_RADIATION_SHIELDING)) {
+					if (RadiationHelper.tryMatchShielding(ModTags.Items.HEAVY_RADIATION_SHIELDING, blockstate)) {
 						reductionFactor += RadiationHelper.getHeavyRadiationShieldingReductionFactor();
 						continue;
 					}
-					if (blockstate.is(ModTags.Blocks.MEDIUM_RADIATION_SHIELDING)) {
+
+					if (RadiationHelper.tryMatchShielding(ModTags.Items.MEDIUM_RADIATION_SHIELDING, blockstate)) {
 						reductionFactor += RadiationHelper.getMediumRadiationShieldingReductionFactor();
 						continue;
 					}
-					if (blockstate.is(ModTags.Blocks.LIGHT_RADIATION_SHIELDING)) {
+
+					if (RadiationHelper.tryMatchShielding(ModTags.Items.LIGHT_RADIATION_SHIELDING, blockstate)) {
+						reductionFactor += RadiationHelper.getLightRadiationShieldingReductionFactor();
+						continue;
+					}
+
+					FluidState fluidState = blockstate.getFluidState();
+					if (fluidState.isSourceOfType(Fluids.WATER)) { // Let water do some shielding as well
 						reductionFactor += RadiationHelper.getLightRadiationShieldingReductionFactor();
 						continue;
 					}
@@ -127,16 +150,18 @@ public class RadiationSource implements IRadiationSource, INBTSerializable<Compo
 			}
 
 			// Get actual exposure at distance
-			float intensityAtEntityReduced = intensityAtEntity;
-			intensityAtEntityReduced = RadiationHelper.getAdjustedFloat(intensityAtEntity * (1f / (1f + reductionFactor)));
+			float intensityAtEntityReduced;
+			intensityAtEntityReduced = MathHelper.tol( MathHelper.tol(intensityAtEntity) *  MathHelper.tol(1f / MathHelper.tol(1f + reductionFactor)));
 
-			radiation.increaseCurrentExposureMilliremsPerSecond(intensityAtEntityReduced);
+			totalDose += intensityAtEntityReduced;
 		}
+
+		return totalDose;
 	}
 
 	@Override
-	public void irradiateLivingEntity(final Level level, final Entity sourceEntity, final LivingEntity livingEntity) {
-		irradiateLivingEntity(level, sourceEntity.blockPosition(), livingEntity);
+	public float irradiateLivingEntity(final Level level, final Entity sourceEntity, final LivingEntity livingEntity) {
+		return irradiateLivingEntity(level, sourceEntity.blockPosition(), livingEntity);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import com.zach2039.whyamiglowing.api.capability.radiationsource.IRadiationSourc
 import com.zach2039.whyamiglowing.capability.radiationsource.RadiationSourceCapability;
 import com.zach2039.whyamiglowing.core.RadiationHelper;
 import com.zach2039.whyamiglowing.util.CapabilityNotPresentException;
+import com.zach2039.whyamiglowing.util.MathHelper;
 import dev.ftb.mods.ftbic.block.entity.generator.NuclearReactorBlockEntity;
 import dev.ftb.mods.ftbic.item.reactor.ReactorPlatingItem;
 import net.minecraft.world.item.ItemStack;
@@ -29,11 +30,11 @@ public class FTBICInteropImpl implements IFTBICInterop {
 			}
 			double platingModifier = 1 / (1 + shieldingFactorFromPlating);
 
-			if (!reactorBlockEntity.reactor.paused) {
+			if (!reactorBlockEntity.reactor.paused && reactorBlockEntity.reactor.energyOutput > 0) {
 				// If reactor is on, radiation should be proportional to power output (maxing out after 100 zaps/t), but lower if using plating
 				double powerOutputModifier = Math.max(1f , (reactorBlockEntity.reactor.energyOutput / 100d));
 				double emittedMilliremsPerSecond = powerOutputModifier * platingModifier * radiationSource.getMaxEmittedMilliremsPerSecond();
-				radiationSource.setEmittedMilliremsPerSecond(RadiationHelper.getAdjustedFloat((float) emittedMilliremsPerSecond));
+				radiationSource.setEmittedMilliremsPerSecond(MathHelper.tol((float) emittedMilliremsPerSecond));
 			} else {
 				// If reactor is off, radiation should be accumulation of whatever is inside, shielded by plates
 				// Get internal radiation from fuel
@@ -45,7 +46,7 @@ public class FTBICInteropImpl implements IFTBICInterop {
 						containedSourcesMillirems += radiationSourceItem.getEmittedMilliremsPerSecond();
 					}
 				}
-				radiationSource.setEmittedMilliremsPerSecond(RadiationHelper.getAdjustedFloat((float) (0.95 * (containedSourcesMillirems * platingModifier))));
+				radiationSource.setEmittedMilliremsPerSecond(MathHelper.tol((float) (0.95 * (containedSourcesMillirems * platingModifier))));
 			}
 		}
 	}

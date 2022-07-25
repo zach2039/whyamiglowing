@@ -1,10 +1,13 @@
 package com.zach2039.whyamiglowing.core;
 
+import com.zach2039.whyamiglowing.capability.radiation.Radiation;
+import com.zach2039.whyamiglowing.config.WhyAmIGlowingConfig;
 import com.zach2039.whyamiglowing.init.ModMobEffects;
 import com.zach2039.whyamiglowing.text.WhyAmIGlowingLang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,6 +16,8 @@ import net.minecraft.world.entity.player.Player;
 public class RadiationSicknessHelper {
 
 	public static final int TICKS_BETWEEN_SYMPTOM_APPLICATION = 600;
+
+	private static final WhyAmIGlowingConfig.Server serverConfig = WhyAmIGlowingConfig.SERVER;
 
 	private static void applyHungerSymptom(final LivingEntity livingEntity, int level) {
 		livingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, TICKS_BETWEEN_SYMPTOM_APPLICATION, level, false, false, false)); // Hidden hunger
@@ -104,6 +109,42 @@ public class RadiationSicknessHelper {
 		player.sendSystemMessage(warningMsg);
 	}
 
+	public static boolean doesRegenerationStopSlightMildSymptoms() {
+		return serverConfig.regenerationEffectStopsSlightMildARSSymptoms.get();
+	}
+
+	public static boolean doesRegenerationSpeedUpRecovery() {
+		return serverConfig.regenerationEffectSpeedsUpARSRecovery.get();
+	}
+
+	public static boolean immuneToARS(final LivingEntity livingEntity) {
+		String entityName = livingEntity.getType().toString();
+
+		for (String key : serverConfig.livingEntitiesImmuneToRadiationSickness.get()) {
+			String toMatch;
+			boolean exact = true;
+			if (key.startsWith("#")) {
+				toMatch = key.substring(1);
+				exact = false;
+			} else {
+				toMatch = key;
+			}
+
+			// Try match
+			if (exact) {
+				if (entityName.equals(toMatch)) {
+					return true;
+				}
+			} else {
+				if (entityName.contains(toMatch)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	public static void applySymptomsForARS(final LivingEntity livingEntity, final SicknessSeverity severity) {
 		if (livingEntity instanceof Player player) {
 			if (player.isCreative())
@@ -112,13 +153,17 @@ public class RadiationSicknessHelper {
 
 		switch (severity) {
 			case SLIGHT:
-				applyHungerSymptom(livingEntity, 0);
+				if (!livingEntity.hasEffect(MobEffects.REGENERATION) || !doesRegenerationStopSlightMildSymptoms()) {
+					applyHungerSymptom(livingEntity, 0);
+				}
 				break;
 			case MILD:
-				applyHungerSymptom(livingEntity, 1);
-				applyPoisonSymptom(livingEntity, 0);
-				applyConfusionSymptom(livingEntity, 0, 0.025f, TICKS_BETWEEN_SYMPTOM_APPLICATION / 4);
-				applyFatigueSymptom(livingEntity, 0, 0.05f);
+				if (!livingEntity.hasEffect(MobEffects.REGENERATION) || !doesRegenerationStopSlightMildSymptoms()) {
+					applyHungerSymptom(livingEntity, 1);
+					applyPoisonSymptom(livingEntity, 0);
+					applyConfusionSymptom(livingEntity, 0, 0.025f, TICKS_BETWEEN_SYMPTOM_APPLICATION / 4);
+					applyFatigueSymptom(livingEntity, 0, 0.05f);
+				}
 				break;
 			case MODERATE:
 				applyHungerSymptom(livingEntity, 2);
@@ -193,6 +238,9 @@ public class RadiationSicknessHelper {
 	}
 
 	private static SicknessSeverity getARSSeverityForDoseAndExposure(final float currentDoseMillirems, final float currentExposureMilliremsPerHour) {
+		if (currentDoseMillirems >= Radiation.MAX_DOSAGE_MILLIREMS)
+			return SicknessSeverity.INSTANT_DEATH;
+
 		if (currentDoseMillirems >= 3000000f && currentExposureMilliremsPerHour >= 3000000f)
 			return SicknessSeverity.FATAL;
 
@@ -212,9 +260,18 @@ public class RadiationSicknessHelper {
 	}
 
 	public static void applyAcuteRadiationSicknessForDoseAndExposureMillirems(final LivingEntity livingEntity, final float currentDoseMillirems, final float currentExposureMilliremsPerHour) {
+		if (immuneToARS(livingEntity))
+			return; // skip living entities that are immune to ARS
+
 		SicknessSeverity severity = getARSSeverityForDoseAndExposure(currentDoseMillirems, currentExposureMilliremsPerHour);
+
 		if (severity == null)
 			return;
+
+		// If severity is instant death, try to kill the entity
+		if (severity == SicknessSeverity.INSTANT_DEATH) {
+			livingEntity.hurt(DamageSource.WITHER.bypassArmor(), livingEntity.getHealth() * 10f);
+		}
 
 		int effectDuration = getTicksForARSTotalDuration(severity);
 
@@ -232,14 +289,17 @@ public class RadiationSicknessHelper {
 		}
 
 		// New sickness
-		livingEntity.addEffect(new MobEffectInstance(
+		MobEffectInstance sickness =
+				new MobEffectInstance(
 				ModMobEffects.ACUTE_RADIATION_SICKNESS_EFFECT.get(),
 				effectDuration,
 				severity.ordinal(),
 				false,
 				false,
 				true
-		));
+		);
+
+		livingEntity.addEffect(sickness);
 	}
 
 }

@@ -1,0 +1,58 @@
+{
+  "values": [
+    {
+      "id": "#forge:storage_blocks/iridium",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/platinum",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/tungsten",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/mercury",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/lead",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/silver",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/bismuth",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/electrum",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/enderium",
+      "required": false
+    },
+    {
+      "id": "#factorymade:plate_blocks/lead",
+      "required": false
+    },
+    {
+      "id": "#factorymade:non_slip_walkway_blocks/lead",
+      "required": false
+    },
+    {
+      "id": "#factorymade:truss_blocks/lead",
+      "required": false
+    },
+    {
+      "id": "ftbic:reinforced_stone",
+      "required": false
+    },
+    "#forge:storage_blocks/gold",
+    "#forge:storage_blocks/netherite"
+  ]
+}

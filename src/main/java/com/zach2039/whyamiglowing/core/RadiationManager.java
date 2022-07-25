@@ -13,6 +13,7 @@ import com.zach2039.whyamiglowing.init.ModMobEffects;
 import com.zach2039.whyamiglowing.init.ModSoundEvents;
 import com.zach2039.whyamiglowing.util.CapabilityNotPresentException;
 import com.zach2039.whyamiglowing.util.ChunkUtil;
+import com.zach2039.whyamiglowing.util.MathHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -49,13 +50,17 @@ public class RadiationManager {
 			if (armorSlotItemStack.isEmpty())
 				continue;
 
-			resistance += RadiationHelper.getRadiationResistanceOfEquipment(armorSlotItemStack.getItem());
+			resistance += RadiationHelper.getRadiationResistanceOfEquipment(armorSlotItemStack);
 		}
+
+		// Get set bonuses for those with full gear on
+		resistance += RadiationHelper.getHazmatSetBonus(livingEntity);
 
 		radiation.setRadiationResistance(resistance);
 	}
 
-	private static void accumulateRadiationFromNearbySources(final Level level, final LivingEntity livingEntity) {
+	private static float accumulateRadiationFromNearbySources(final Level level, final LivingEntity livingEntity) {
+		float totalDose = 0f;
 
 		// Entity sources
 		for (Entity entity : level.getEntitiesOfClass(Entity.class, new AABB(livingEntity.blockPosition()).inflate(RadiationHelper.getRadiaitonMaxDistance()))) {
@@ -72,7 +77,7 @@ public class RadiationManager {
 			// Don't allow entities to irradiate themselves
 			if (livingEntity.getId() != entity.getId()) {
 				IRadiationSource radiationSource = radiationSourceOptional.orElseThrow(CapabilityNotPresentException::new);
-				radiationSource.irradiateLivingEntity(level, entity, livingEntity);
+				totalDose += radiationSource.irradiateLivingEntity(level, entity, livingEntity);
 			}
 		}
 
@@ -105,8 +110,9 @@ public class RadiationManager {
 						WhyAmIGlowing.FTBIC_INTEROP.handleReactorRadiationOutput(blockEntity);
 					}
 
-					radiationSource.irradiateLivingEntity(level, blockPos, livingEntity);
+					totalDose += radiationSource.irradiateLivingEntity(level, blockPos, livingEntity);
 				}
+
 				if (!nullBlockPos.isEmpty()) {
 					// Clean invalid entries
 					nullBlockPos.forEach((e) -> {
@@ -116,16 +122,16 @@ public class RadiationManager {
 			}
 		}
 
-
+		return totalDose;
 	}
 
 	/**
 	 * Increases radiation of players with radioactive material on their person.
 	 * @param livingEntity the living entity to irradiate
 	 */
-	private static void accumulateRadiationFromInventoryItems(final LivingEntity livingEntity) {
+	private static float accumulateRadiationFromInventoryItems(final LivingEntity livingEntity) {
 		IRadiation radiation = livingEntity.getCapability(RadiationCapability.RADIATION_CAPABILITY).orElseThrow(CapabilityNotPresentException::new);
-		float totalRads = 0f;
+		float totalDose = 0f;
 
 		if (livingEntity instanceof Player player) {
 			if (player.getInventory().hasAnyMatching((s) -> s.getCapability(RadiationSourceCapability.RADIATION_SOURCE_CAPABILITY).isPresent())) {
@@ -133,9 +139,8 @@ public class RadiationManager {
 					for (ItemStack itemStack : stackList.stream().filter((s) -> s.getCapability(RadiationSourceCapability.RADIATION_SOURCE_CAPABILITY).isPresent()).toList()) {
 						IRadiationSource radiationSource = itemStack.getCapability(RadiationSourceCapability.RADIATION_SOURCE_CAPABILITY).orElseThrow(CapabilityNotPresentException::new);
 
-						float rads = radiationSource.getEmittedMilliremsPerSecond() * itemStack.getCount();
-						totalRads += rads;
-						radiation.increaseCurrentExposureMilliremsPerSecond(rads);
+						float dose = radiationSource.getEmittedMilliremsPerSecond() * itemStack.getCount();
+						totalDose += MathHelper.tol(dose);
 					}
 				}
 			}
@@ -147,8 +152,10 @@ public class RadiationManager {
 		if (radiationSourceOptional.isPresent()) {
 			IRadiationSource radiationSource = radiationSourceOptional.orElseThrow(CapabilityNotPresentException::new);
 
-			radiationSource.setEmittedMilliremsPerSecond(totalRads * 0.95f);
+			radiationSource.setEmittedMilliremsPerSecond(MathHelper.tol(totalDose * 0.95f));
 		}
+
+		return totalDose;
 	}
 
 	private static void decreaseRadiationPassive(final LivingEntity livingEntity, final IRadiation radiation) {
@@ -157,18 +164,18 @@ public class RadiationManager {
 		// Rad-Away helps on passive rem loss
 		MobEffectInstance effectInstance = livingEntity.getEffect(ModMobEffects.RAD_AWAY_EFFECT.get());
 		if (effectInstance != null) {
-			passiveMilliremLossPerHour *= (RadiationHelper.getRadAwayDoseReductionMilliremPerHour() * (effectInstance.getAmplifier() + 1));
+			passiveMilliremLossPerHour *= MathHelper.tol(RadiationHelper.getRadAwayDoseReductionMilliremPerHour() * (effectInstance.getAmplifier() + 1));
 		}
 
 		float passiveMilliremLossPerSecond = RadiationHelper.convertPerHourToPerSecond(passiveMilliremLossPerHour);
-		radiation.decreaseAbsorbedDoseMillirems(passiveMilliremLossPerSecond * livingEntity.getRandom().nextFloat());
+		radiation.decreaseAbsorbedDoseMillirems(MathHelper.tol(passiveMilliremLossPerSecond * livingEntity.getRandom().nextFloat()));
 	}
 
 	private static void playGeigerSound(final Player player, final SoundEvent geigerSoundEvent) {
 		player.getLevel().playSound(
 				null, player.getX(), player.getY(), player.getZ(),
-				geigerSoundEvent, SoundSource.NEUTRAL,
-				0.2f, 1.0f);
+				geigerSoundEvent, SoundSource.PLAYERS,
+				0.05f, 1.0f);
 	}
 	private static void doGeigerNoise(final LivingEntity livingEntity, final IRadiation radiation) {
 		if (radiation.getCurrentExposureMilliremsPerSecond() == 0f)
@@ -189,18 +196,18 @@ public class RadiationManager {
 		 * Tick check to prevent sound stacking. Also, always play low tick noise so that other sounds aren't so jarring.
 		 */
 		float receivedDoseMilliremPerHour = RadiationHelper.convertPerSecondToPerHour(radiation.getCurrentExposureMilliremsPerSecond());
-		if (receivedDoseMilliremPerHour < 1f) {
+		if (receivedDoseMilliremPerHour < 100f) {
 			if (player.tickCount % 40 == 0)
 				playGeigerSound(player, ModSoundEvents.GEIGER_TICK_LOW.get());
 		}
 
-		if (receivedDoseMilliremPerHour >= 1f && receivedDoseMilliremPerHour < 5f) {
+		if (receivedDoseMilliremPerHour >= 100f && receivedDoseMilliremPerHour < 500f) {
 			if (player.tickCount % 40 == 0)	playGeigerSound(player, ModSoundEvents.GEIGER_TICK_MED.get());
-		} else if (receivedDoseMilliremPerHour >= 5f && receivedDoseMilliremPerHour < 10f) {
+		} else if (receivedDoseMilliremPerHour >= 500f && receivedDoseMilliremPerHour < 5000f) {
 			if (player.tickCount % 40 == 0) playGeigerSound(player, ModSoundEvents.GEIGER_TICK_HIGH.get());
-		}else if (receivedDoseMilliremPerHour >= 10f && receivedDoseMilliremPerHour < 20f) {
+		}else if (receivedDoseMilliremPerHour >= 5000f && receivedDoseMilliremPerHour < 50000f) {
 			if (player.tickCount % 40 == 0) playGeigerSound(player, ModSoundEvents.GEIGER_TICK_VERY_HIGH.get());
-		} else if (receivedDoseMilliremPerHour >= 20f){
+		} else if (receivedDoseMilliremPerHour >= 50000f){
 			if (player.tickCount % 40 == 0) playGeigerSound(player, ModSoundEvents.GEIGER_TICK_EXTREME.get());
 		}
 	}
@@ -216,27 +223,37 @@ public class RadiationManager {
 			return;
 
 		IRadiation radiation = radiationOptional.orElseThrow(CapabilityNotPresentException::new);
-		float currentExposure;
+		float currentExposure = 0f;
 		float currentDose;
 
-		// Reset received rads
-		radiation.setCurrentExposureMilliremsPerSecond(0f);
+		// Save last and reset current received rads
+		radiation.setLastExposureMilliremsPerSecond(radiation.getCurrentExposureMilliremsPerSecond());
 
 		calculateAndUpdateRadiationResistance(livingEntity, radiation);
 
 		// Accumulate via multiple methods into received rads
-		accumulateRadiationFromInventoryItems(livingEntity);
-		accumulateRadiationFromNearbySources(level, livingEntity);
+		currentExposure += accumulateRadiationFromInventoryItems(livingEntity);
+		currentExposure += accumulateRadiationFromNearbySources(level, livingEntity);
+		radiation.setCurrentExposureMilliremsPerSecond(currentExposure);
 
 		// Increase current absorbed dose by current received dose
 		currentDose = radiation.getAbsorbedDoseMillirems();
-		currentExposure = radiation.getCurrentExposureMilliremsPerSecond();
-		radiation.increaseAbsorbedDoseMillirems(RadiationHelper.getAdjustedFloat(currentExposure));
+		radiation.increaseAbsorbedDoseMillirems(MathHelper.tol(currentExposure));
 
 		doGeigerNoise(livingEntity, radiation);
 
 		RadiationSicknessHelper.applyAcuteRadiationSicknessForDoseAndExposureMillirems(livingEntity, currentDose, RadiationHelper.convertPerSecondToPerHour(currentExposure));
 		decreaseRadiationPassive(livingEntity, radiation);
+
+		// Error on NaN and reset
+		if (Float.isNaN(radiation.getAbsorbedDoseMillirems())) {
+			WhyAmIGlowing.LOGGER.error("Entity " + livingEntity + " has an invalid radiation dosage! Resetting. Report to mod author!");
+			radiation.setAbsorbedDoseMillirems(0f);
+		}
+		if (Float.isNaN(radiation.getCurrentExposureMilliremsPerSecond())) {
+			WhyAmIGlowing.LOGGER.error("Entity " + livingEntity + " has an invalid radiation exposure! Resetting. Report to mod author!");
+			radiation.setCurrentExposureMilliremsPerSecond(0f);
+		}
 	}
 
 	@OnlyIn(Dist.CLIENT)

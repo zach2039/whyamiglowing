@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:iron_bars"
+    },
+    "C": {
+      "item": "minecraft:charcoal"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "L": {
+      "item": "minecraft:leather_helmet"
+    }
+  },
+  "pattern": [
+    " B ",
+    "ILI",
+    " C "
+  ],
+  "result": {
+    "item": "whyamiglowing:hazmat_respirator_mk_1"
+  }
+}

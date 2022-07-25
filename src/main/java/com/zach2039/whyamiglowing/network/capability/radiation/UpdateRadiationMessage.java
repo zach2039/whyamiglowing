@@ -17,23 +17,26 @@ public class UpdateRadiationMessage {
 	private final int livingEntityId;
 	private final float absorbedDoseRads;
 	private final float currentReceivedRads;
+	private final float lastReceivedRads;
 	private final float radiationResistance;
 
-	public UpdateRadiationMessage(final int livingEntityId, final float absorbedDoseRads, final float currentReceivedRads, final float radiationResistance) {
+	public UpdateRadiationMessage(final int livingEntityId, final float absorbedDoseRads, final float currentReceivedRads, final float lastReceivedRads, final float radiationResistance) {
 		this.livingEntityId = livingEntityId;
 		this.absorbedDoseRads = absorbedDoseRads;
 		this.currentReceivedRads = currentReceivedRads;
+		this.lastReceivedRads = lastReceivedRads;
 		this.radiationResistance = radiationResistance;
 	}
 
 	public static UpdateRadiationMessage decode(final FriendlyByteBuf buf) {
-		return new UpdateRadiationMessage(buf.readInt(), buf.readFloat(), buf.readFloat(), buf.readFloat());
+		return new UpdateRadiationMessage(buf.readInt(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat());
 	}
 
 	public static void encode(final UpdateRadiationMessage message, final FriendlyByteBuf buf) {
 		buf.writeInt(message.livingEntityId);
 		buf.writeFloat(message.absorbedDoseRads);
 		buf.writeFloat(message.currentReceivedRads);
+		buf.writeFloat(message.lastReceivedRads);
 		buf.writeFloat(message.radiationResistance);
 	}
 
@@ -49,6 +52,7 @@ public class UpdateRadiationMessage {
 
 				radiation.setAbsorbedDoseMillirems(message.absorbedDoseRads);
 				radiation.setCurrentExposureMilliremsPerSecond(message.currentReceivedRads);
+				radiation.setLastExposureMilliremsPerSecond(message.lastReceivedRads);
 				radiation.setRadiationResistance(message.radiationResistance);
 			}
 		});

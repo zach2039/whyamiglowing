@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:iron_bars"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "I": {
+      "tag": "forge:ingots/lead"
+    },
+    "L": {
+      "item": "minecraft:iron_boots"
+    }
+  },
+  "pattern": [
+    " B ",
+    "ILI",
+    " G "
+  ],
+  "result": {
+    "item": "whyamiglowing:hazmat_boots_mk_2"
+  }
+}
