@@ -92,6 +92,7 @@ public class WhyAmIGlowingItemModelProvider extends ItemModelProvider {
 		// Consumables
 		withGeneratedParentAndDefaultTexture(ModItems.RAD_X.get());
 		withGeneratedParentAndDefaultTexture(ModItems.RAD_AWAY.get());
+		withGeneratedParentAndDefaultTexture(ModItems.IODINE_DEFENSE.get());
 	}
 
 

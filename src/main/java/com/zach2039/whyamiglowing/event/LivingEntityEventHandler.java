@@ -36,4 +36,13 @@ public class LivingEntityEventHandler {
 			event.setCanceled(true);
 		}
 	}
+
+	@SubscribeEvent
+	public static void onEntityDeath(final LivingEvent event) {
+		if (event.getEntity() != null) {
+			if (event.getEntity().isDeadOrDying()) {
+
+			}
+		}
+	}
 }

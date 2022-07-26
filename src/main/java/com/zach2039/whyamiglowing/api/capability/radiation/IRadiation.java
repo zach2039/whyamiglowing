@@ -6,16 +6,26 @@ public interface IRadiation {
 	void setAbsorbedDoseMillirems(float absorbedDoseMillirems);
 
 	void increaseAbsorbedDoseMillirems(float absorbedDoseMillirems);
+	void increaseAbsorbedDoseMilliremsBypassExternalResistances(float absorbedDoseMillirems);
 	void decreaseAbsorbedDoseMillirems(float absorbedDoseMillirems);
 
 	float getRadiationResistance();
 	void setRadiationResistance(float radiationResistance);
 
-	float getCurrentExposureMilliremsPerSecond();
-	void setCurrentExposureMilliremsPerSecond(float currentExposureMilliremsPerSecond);
+	float getInternalRadiationResistance();
+	void setInternalRadiationResistance(float internalRadiationResistance);
 
-	float getLastExposureMilliremsPerSecond();
-	void setLastExposureMilliremsPerSecond(float lastExposureMilliremsPerSecond);
+	float getCurrentTotalExposureMilliremsPerSecond();
 
-	void increaseCurrentExposureMilliremsPerSecond(float currentExposureMilliremsPerSecond);
+	float getCurrentExternalExposureMilliremsPerSecond();
+	void setCurrentExternalExposureMilliremsPerSecond(float currentExposureMilliremsPerSecond);
+
+	float getLastExternalExposureMilliremsPerSecond();
+	void setLastExternalExposureMilliremsPerSecond(float lastExposureMilliremsPerSecond);
+
+	float getContaminationMilliremsPerSecond();
+	void setContaminationMilliremsPerSecond(float contaminationMilliremsPerSecond);
+
+	void increaseContaminationMilliremsPerSecond(float contaminationMilliremsPerSecond);
+	void decreaseContaminationMilliremsPerSecond(float contaminationMilliremsPerSecond);
 }

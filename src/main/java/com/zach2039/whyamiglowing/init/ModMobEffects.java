@@ -2,6 +2,7 @@ package com.zach2039.whyamiglowing.init;
 
 import com.zach2039.whyamiglowing.WhyAmIGlowing;
 import com.zach2039.whyamiglowing.world.effect.AcuteRadiationSyndromeEffect;
+import com.zach2039.whyamiglowing.world.effect.IodineDefenseEffect;
 import com.zach2039.whyamiglowing.world.effect.RadXEffect;
 import com.zach2039.whyamiglowing.world.effect.WhyAmIGlowingMobEffect;
 import net.minecraft.world.effect.MobEffect;
@@ -17,7 +18,7 @@ public class ModMobEffects {
 
 	public static final RegistryObject<WhyAmIGlowingMobEffect> RAD_X_EFFECT = EFFECTS.register("rad_x", RadXEffect::new);
 	public static final RegistryObject<WhyAmIGlowingMobEffect> RAD_AWAY_EFFECT = EFFECTS.register("rad_away", RadXEffect::new);
-
+	public static final RegistryObject<WhyAmIGlowingMobEffect> IODINE_DEFENSE_EFFECT = EFFECTS.register("iodine_defense", IodineDefenseEffect::new);
 	public static final RegistryObject<WhyAmIGlowingMobEffect> ACUTE_RADIATION_SICKNESS_EFFECT = EFFECTS.register("acute_radiation_sickness", AcuteRadiationSyndromeEffect::new);
 
 	public static void initialize(final IEventBus modEventBus) {

@@ -26,15 +26,18 @@ import net.minecraft.world.entity.LivingEntity;
  * @author zach2039
  */
 public class RadiationCommand {
-	private static final SimpleCommandExceptionType INVALID_ENTITY_EXCEPTION = new SimpleCommandExceptionType(
+	protected static final SimpleCommandExceptionType INVALID_ENTITY_EXCEPTION = new SimpleCommandExceptionType(
 			Component.translatable(WhyAmIGlowingLang.COMMAND_RADIATION_INVALID_ENTITY.getTranslationKey())
 	);
 
 	public static ArgumentBuilder<CommandSourceStack, ?> register() {
 		return Commands.literal("radiation")
-				.then(AddRadiationCommand.register())
-				.then(GetRadiationCommand.register())
-				.then(SetRadiationCommand.register());
+				.then(AddRadiationContaminationCommand.register())
+				.then(GetRadiationContaminationCommand.register())
+				.then(SetRadiationContaminationCommand.register())
+				.then(AddRadiationDoseCommand.register())
+				.then(GetRadiationDoseCommand.register())
+				.then(SetRadiationDoseCommand.register());
 	}
 
 	static ArgumentBuilder<CommandSourceStack, ?> create(final ArgumentBuilder<CommandSourceStack, ?> builder, final IEntityProcessor processor, final String successMessage) {
@@ -59,7 +62,7 @@ public class RadiationCommand {
 	 *
 	 * @param context        The command context
 	 * @param entity         The specified entity
-	 * @param amount         The specified max health amount
+	 * @param amount         The specified amount
 	 * @param processor      The entity processor
 	 * @param successMessage The translation key of the message to send when the command succeeds.
 	 *                       This will be provided with the entity's display name and the amount as format arguments.

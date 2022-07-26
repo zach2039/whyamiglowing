@@ -2,6 +2,7 @@ package com.zach2039.whyamiglowing.init;
 
 import com.zach2039.whyamiglowing.WhyAmIGlowing;
 import com.zach2039.whyamiglowing.world.item.GeigerCounterItem;
+import com.zach2039.whyamiglowing.world.item.IodineDefenseItem;
 import com.zach2039.whyamiglowing.world.item.RadAwayItem;
 import com.zach2039.whyamiglowing.world.item.RadXItem;
 import com.zach2039.whyamiglowing.world.item.material.ModArmorMaterial;
@@ -37,6 +38,9 @@ public class ModItems {
 	);
 	public static final RegistryObject<RadAwayItem> RAD_AWAY = ITEMS.register("rad_away",
 			() -> new RadAwayItem(defaultItemProperties().stacksTo(4))
+	);
+	public static final RegistryObject<IodineDefenseItem> IODINE_DEFENSE = ITEMS.register("iodine_defense",
+			() -> new IodineDefenseItem(defaultItemProperties().stacksTo(4))
 	);
 
 	public static void initialize(final IEventBus modEventBus) {

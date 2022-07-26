@@ -18,18 +18,22 @@ public class UpdateRadiationMessage {
 	private final float absorbedDoseRads;
 	private final float currentReceivedRads;
 	private final float lastReceivedRads;
+	private final float contaminationMilliremPerHour;
 	private final float radiationResistance;
+	private final float internalRadiationResistance;
 
-	public UpdateRadiationMessage(final int livingEntityId, final float absorbedDoseRads, final float currentReceivedRads, final float lastReceivedRads, final float radiationResistance) {
+	public UpdateRadiationMessage(final int livingEntityId, final float absorbedDoseRads, final float currentReceivedRads, final float lastReceivedRads, final float contaminationMilliremPerHour, final float radiationResistance, final float internalRadiationResistance) {
 		this.livingEntityId = livingEntityId;
 		this.absorbedDoseRads = absorbedDoseRads;
 		this.currentReceivedRads = currentReceivedRads;
 		this.lastReceivedRads = lastReceivedRads;
+		this.contaminationMilliremPerHour = contaminationMilliremPerHour;
 		this.radiationResistance = radiationResistance;
+		this.internalRadiationResistance = internalRadiationResistance;
 	}
 
 	public static UpdateRadiationMessage decode(final FriendlyByteBuf buf) {
-		return new UpdateRadiationMessage(buf.readInt(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat());
+		return new UpdateRadiationMessage(buf.readInt(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat());
 	}
 
 	public static void encode(final UpdateRadiationMessage message, final FriendlyByteBuf buf) {
@@ -37,7 +41,9 @@ public class UpdateRadiationMessage {
 		buf.writeFloat(message.absorbedDoseRads);
 		buf.writeFloat(message.currentReceivedRads);
 		buf.writeFloat(message.lastReceivedRads);
+		buf.writeFloat(message.contaminationMilliremPerHour);
 		buf.writeFloat(message.radiationResistance);
+		buf.writeFloat(message.internalRadiationResistance);
 	}
 
 	public static void handle(final UpdateRadiationMessage message, final Supplier<NetworkEvent.Context> ctx) {
@@ -51,9 +57,11 @@ public class UpdateRadiationMessage {
 				final IRadiation radiation = RadiationCapability.getRadiation(livingEntity).orElseThrow(CapabilityNotPresentException::new);
 
 				radiation.setAbsorbedDoseMillirems(message.absorbedDoseRads);
-				radiation.setCurrentExposureMilliremsPerSecond(message.currentReceivedRads);
-				radiation.setLastExposureMilliremsPerSecond(message.lastReceivedRads);
+				radiation.setCurrentExternalExposureMilliremsPerSecond(message.currentReceivedRads);
+				radiation.setLastExternalExposureMilliremsPerSecond(message.lastReceivedRads);
+				radiation.setContaminationMilliremsPerSecond(message.contaminationMilliremPerHour);
 				radiation.setRadiationResistance(message.radiationResistance);
+				radiation.setInternalRadiationResistance(message.internalRadiationResistance);
 			}
 		});
 	}

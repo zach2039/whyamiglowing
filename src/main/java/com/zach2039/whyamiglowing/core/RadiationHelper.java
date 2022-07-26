@@ -11,7 +11,6 @@ import com.zach2039.whyamiglowing.config.WhyAmIGlowingConfig;
 import com.zach2039.whyamiglowing.init.ModTags;
 import com.zach2039.whyamiglowing.text.WhyAmIGlowingLang;
 import com.zach2039.whyamiglowing.util.CapabilityNotPresentException;
-import com.zach2039.whyamiglowing.util.RegistryUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -90,6 +89,18 @@ public class RadiationHelper {
 
 	public static int getRadXDurationTicks() {
 		return serverConfig.radXDurationTicks.get();
+	}
+
+	public static float getIodineInternalExposureResistance() {
+		return serverConfig.iodineDefenseInternalExposureResistancePerLevel.get().floatValue();
+	}
+
+	public static int getIodineDefenseMaxLevel() {
+		return serverConfig.iodineDefenseMaxLevel.get();
+	}
+
+	public static int getIodineDefenseDurationTicks() {
+		return serverConfig.iodineDefenseDurationTicks.get();
 	}
 
 	public static void cleanInvalidBlockToSourceBlocks(final Level level) {
@@ -177,15 +188,20 @@ public class RadiationHelper {
 			IRadiationSource radiationSource = radiationSourceOptional.orElseThrow(CapabilityNotPresentException::new);
 
 			float currentAbsorbedDoseMillirems = radiation.getAbsorbedDoseMillirems();
-			float currentReceivedDoseMilliremsPerHour = RadiationHelper.convertPerSecondToPerHour(radiation.getCurrentExposureMilliremsPerSecond());
+			float currentReceivedDoseMilliremsPerHour = RadiationHelper.convertPerSecondToPerHour(radiation.getCurrentExternalExposureMilliremsPerSecond());
+			float currentContaminationMilliremsPerHour = RadiationHelper.convertPerSecondToPerHour(radiation.getContaminationMilliremsPerSecond());
 			float currentOutputExposureMilliremsPerHour = RadiationHelper.convertPerSecondToPerHour(radiationSource.getEmittedMilliremsPerSecond());
 			float currentRadiationResistance = radiation.getRadiationResistance();
+			float currentInternalRadiationResistance = radiation.getInternalRadiationResistance();
 
 			String absorbedDose = RadiationHelper.getDosageDisplayMillirems(currentAbsorbedDoseMillirems);
 			String currentExposure = RadiationHelper.getDosageDisplayMilliremsPerHour(currentReceivedDoseMilliremsPerHour);
 			String effectiveExposure = RadiationHelper.getDosageDisplayMilliremsPerHour(currentReceivedDoseMilliremsPerHour * (1f - currentRadiationResistance));
+			String currentContamination = RadiationHelper.getDosageDisplayMilliremsPerHour(currentContaminationMilliremsPerHour);
+			String effectiveContamination = RadiationHelper.getDosageDisplayMilliremsPerHour(currentContaminationMilliremsPerHour * (1f - currentInternalRadiationResistance));
 			String currentOutput = RadiationHelper.getDosageDisplayMilliremsPerHour(currentOutputExposureMilliremsPerHour);
 			String radiationResistance = String.format("%.2f%%", currentRadiationResistance * 100f);
+			String internalRadiationResistance = String.format("%.2f%%", currentInternalRadiationResistance * 100f);
 
 			player.sendSystemMessage(Component.translatable(
 					WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_0.getTranslationKey(), target.getName()
@@ -197,15 +213,21 @@ public class RadiationHelper {
 					WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_2.getTranslationKey(), currentExposure, effectiveExposure
 			).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
 			player.sendSystemMessage(Component.translatable(
-					WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_3.getTranslationKey(), currentOutput
+					WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_3.getTranslationKey(), currentContamination, effectiveContamination
 			).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
 			player.sendSystemMessage(Component.translatable(
-					WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_4.getTranslationKey(), radiationResistance
+					WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_4.getTranslationKey(), currentOutput
+			).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
+			player.sendSystemMessage(Component.translatable(
+					WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_5.getTranslationKey(), radiationResistance
+			).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
+			player.sendSystemMessage(Component.translatable(
+					WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_6.getTranslationKey(), internalRadiationResistance
 			).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
 
 			WhyAmIGlowing.LOGGER.debug("Entity : " + target.getName());
 			WhyAmIGlowing.LOGGER.debug("       absorbed : " + radiation.getAbsorbedDoseMillirems());
-			WhyAmIGlowing.LOGGER.debug("       current  : " + radiation.getCurrentExposureMilliremsPerSecond());
+			WhyAmIGlowing.LOGGER.debug("       current  : " + radiation.getCurrentExternalExposureMilliremsPerSecond());
 			WhyAmIGlowing.LOGGER.debug("       resist   : " + radiation.getRadiationResistance());
 		}
 	}
@@ -235,9 +257,15 @@ public class RadiationHelper {
 		return 0.0f;
 	}
 
+	public static boolean wearingFullHazmatSet(final LivingEntity livingEntity) {
+		return getHazmatSetBonus(livingEntity) > 0.0f;
+	}
+
 	public static float getHazmatSetBonus(final LivingEntity livingEntity) {
 		for (ItemStack armorSlotItemStack : livingEntity.getArmorSlots()) {
 			if (!armorSlotItemStack.is(ModTags.Items.HAZMAT_GEAR_PIECE))
+				return 0.0f;
+			if (armorSlotItemStack.isEmpty())
 				return 0.0f;
 		}
 
@@ -267,8 +295,6 @@ public class RadiationHelper {
 
 		return ChatFormatting.LIGHT_PURPLE;
 	}
-
-
 
 	public static String getDosageDisplayMillirems(final float doseMillirems) {
 		String doseUnit;

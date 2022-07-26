@@ -38,6 +38,7 @@ public class WhyAmIGlowingLanguageProvider extends LanguageProvider {
 	private void addEffects() {
 		addEffect(ModMobEffects.RAD_X_EFFECT,  "Rad-X");
 		addEffect(ModMobEffects.RAD_AWAY_EFFECT,  "Rad-Away");
+		addEffect(ModMobEffects.IODINE_DEFENSE_EFFECT,  "Iodine-Defense");
 		addEffect(ModMobEffects.ACUTE_RADIATION_SICKNESS_EFFECT,  "Rad Sickness");
 	}
 	private void addSubtitles() {
@@ -53,17 +54,22 @@ public class WhyAmIGlowingLanguageProvider extends LanguageProvider {
 	}
 	private void addMessages() {
 		// Commands
-		add(WhyAmIGlowingLang.MESSAGE_RADIATION_GET.getTranslationKey(), "Entity: %s, Dose: %s");
-		add(WhyAmIGlowingLang.MESSAGE_RADIATION_ADD.getTranslationKey(), "Added %2$s dose to %1$s");
-		add(WhyAmIGlowingLang.MESSAGE_RADIATION_SET.getTranslationKey(), "Set radiation dose of %s to %s");
+		add(WhyAmIGlowingLang.MESSAGE_DOSE_GET.getTranslationKey(), "Entity: %s, Dose: %s");
+		add(WhyAmIGlowingLang.MESSAGE_DOSE_ADD.getTranslationKey(), "Added %2$s dose to %1$s");
+		add(WhyAmIGlowingLang.MESSAGE_DOSE_SET.getTranslationKey(), "Set radiation dose of %s to %s");
+		add(WhyAmIGlowingLang.MESSAGE_CONTAMINATION_GET.getTranslationKey(), "Entity: %s, Contamination: %s");
+		add(WhyAmIGlowingLang.MESSAGE_CONTAMINATION_ADD.getTranslationKey(), "Added %2$s contamination to %1$s");
+		add(WhyAmIGlowingLang.MESSAGE_CONTAMINATION_SET.getTranslationKey(), "Set radiation contamination of %s to %s");
 
 		// Geiger Counter
 		add(WhyAmIGlowingLang.MESSAGE_TOGGLED_GEIGER_SPEAKER.getTranslationKey(), "Toggled speaker output.");
 		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_0.getTranslationKey(), "Scan of: %s");
-		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_1.getTranslationKey(), "AbsDose: %s");
+		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_1.getTranslationKey(), "Abs. Dose: %s");
 		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_2.getTranslationKey(), "Exposure: %s (%s eff.)");
-		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_3.getTranslationKey(), "Output: %s");
-		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_4.getTranslationKey(), "Resistance: %s");
+		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_3.getTranslationKey(), "Contamination: %s (%s eff.)");
+		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_4.getTranslationKey(), "Output: %s");
+		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_5.getTranslationKey(), "Resistance: %s");
+		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_6.getTranslationKey(), "Int. Resistance: %s");
 
 		// Exposure
 		add(WhyAmIGlowingLang.MESSAGE_EXPOSURE_SYMPTOM_0.getTranslationKey(), "You feel sick...");
@@ -102,5 +108,6 @@ public class WhyAmIGlowingLanguageProvider extends LanguageProvider {
 		// Consumables
 		addItem(ModItems.RAD_X, "Rad-X");
 		addItem(ModItems.RAD_AWAY, "Rad-Away");
+		addItem(ModItems.IODINE_DEFENSE, "Iodine-Defense");
 	}
 }

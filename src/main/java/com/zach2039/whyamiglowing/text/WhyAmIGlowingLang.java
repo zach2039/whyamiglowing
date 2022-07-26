@@ -6,15 +6,20 @@ import net.minecraft.resources.ResourceLocation;
 
 public enum WhyAmIGlowingLang {
 	// Messages
-	MESSAGE_RADIATION_GET("message", "radiation.get"),
-	MESSAGE_RADIATION_ADD("message", "radiation.add"),
-	MESSAGE_RADIATION_SET("message", "radiation.set"),
+	MESSAGE_DOSE_GET("message", "radiation.dose.get"),
+	MESSAGE_DOSE_ADD("message", "radiation.dose.add"),
+	MESSAGE_DOSE_SET("message", "radiation.dose.set"),
+	MESSAGE_CONTAMINATION_GET("message", "radiation.contamination.get"),
+	MESSAGE_CONTAMINATION_ADD("message", "radiation.contamination.add"),
+	MESSAGE_CONTAMINATION_SET("message", "radiation.contamination.set"),
 	MESSAGE_TOGGLED_GEIGER_SPEAKER("message", "toggled_geiger_speaker"),
 	MESSAGE_GEIGER_SCAN_0("message", "geiger_scan.0"),
 	MESSAGE_GEIGER_SCAN_1("message", "geiger_scan.1"),
 	MESSAGE_GEIGER_SCAN_2("message", "geiger_scan.2"),
 	MESSAGE_GEIGER_SCAN_3("message", "geiger_scan.3"),
 	MESSAGE_GEIGER_SCAN_4("message", "geiger_scan.4"),
+	MESSAGE_GEIGER_SCAN_5("message", "geiger_scan.5"),
+	MESSAGE_GEIGER_SCAN_6("message", "geiger_scan.6"),
 	MESSAGE_EXPOSURE_SYMPTOM_0("message", "exposure_symptom.0"),
 	MESSAGE_EXPOSURE_SYMPTOM_1("message", "exposure_symptom.1"),
 	MESSAGE_EXPOSURE_SYMPTOM_2("message", "exposure_symptom.2"),

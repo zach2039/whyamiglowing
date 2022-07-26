@@ -7,12 +7,12 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.world.entity.LivingEntity;
 
-public class AddRadiationCommand {
+public class AddRadiationDoseCommand {
 	static ArgumentBuilder<CommandSourceStack, ?> register() {
 		return RadiationCommand.create(
-				Commands.literal("add").requires((sourceStack) -> sourceStack.hasPermission(4)),
-				AddRadiationCommand::addDosageMillirems,
-				WhyAmIGlowingLang.MESSAGE_RADIATION_ADD.getTranslationKey()
+				Commands.literal("add_dose").requires((sourceStack) -> sourceStack.hasPermission(4)),
+				AddRadiationDoseCommand::addDosageMillirems,
+				WhyAmIGlowingLang.MESSAGE_DOSE_ADD.getTranslationKey()
 		);
 	}
 

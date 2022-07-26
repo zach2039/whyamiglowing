@@ -95,6 +95,7 @@ public class WhyAmIGlowingConfig {
 		public final DoubleValue veryHighResistanceEquipmentBonus;
 		public final DoubleValue fullHazmatEquipmentResistanceBonus;
 		public final DoubleValue maxRadiationResistanceBonus;
+		public final DoubleValue maxInternalRadiationResistanceBonus;
 
 		public final DoubleValue passiveDoseReductionMilliremPerHour;
 
@@ -109,6 +110,12 @@ public class WhyAmIGlowingConfig {
 		public final IntValue radXMaxLevel;
 
 		public final IntValue radXDurationTicks;
+
+		public final DoubleValue iodineDefenseInternalExposureResistancePerLevel;
+
+		public final IntValue iodineDefenseMaxLevel;
+
+		public final IntValue iodineDefenseDurationTicks;
 
 		public final BooleanValue regenerationEffectStopsSlightMildARSSymptoms;
 
@@ -234,7 +241,12 @@ public class WhyAmIGlowingConfig {
 
 			maxRadiationResistanceBonus = builder
 					.comment("The max radiation resistance an entity can have.")
-					.defineInRange("maxResistanceBonus", 0.95f, 0.0f, 1.0f)
+					.defineInRange("maxRadiationResistanceBonus", 0.95f, 0.0f, 1.0f)
+					;
+
+			maxInternalRadiationResistanceBonus = builder
+					.comment("The max internal radiation resistance an entity can have.")
+					.defineInRange("maxInternalRadiationResistanceBonus", 0.75f, 0.0f, 1.0f)
 					;
 
 			passiveDoseReductionMilliremPerHour = builder
@@ -264,6 +276,18 @@ public class WhyAmIGlowingConfig {
 			radXDurationTicks = builder
 					.comment("The duration of Rad-X when applied.")
 					.defineInRange("radXDurationTicks", 12000, 0, Integer.MAX_VALUE);
+
+			iodineDefenseInternalExposureResistancePerLevel = builder
+					.comment("The internal radiation resistance bonus for each level of Iodine Defense.")
+					.defineInRange("iodineDefenseInternalExposureResistancePerLevel", 0.50f, 0f, 1f);
+
+			iodineDefenseMaxLevel = builder
+					.comment("The max level Iodine Defense can be stacked with multiple uses.")
+					.defineInRange("iodineDefenseMaxLevel", 0, 0, Integer.MAX_VALUE);
+
+			iodineDefenseDurationTicks = builder
+					.comment("The duration of Iodine Defense when applied.")
+					.defineInRange("iodineDefenseDurationTicks", 24000, 0, Integer.MAX_VALUE);
 
 			regenerationEffectStopsSlightMildARSSymptoms = builder
 					.comment("Whether slight and mild radiation sickness can have symptoms reduced by having an active regeneration effect.")

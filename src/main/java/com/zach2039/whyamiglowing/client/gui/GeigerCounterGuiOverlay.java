@@ -2,10 +2,7 @@ package com.zach2039.whyamiglowing.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexBuffer;
 import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 import com.zach2039.whyamiglowing.WhyAmIGlowing;
 import com.zach2039.whyamiglowing.capability.radiation.RadiationCapability;
 import com.zach2039.whyamiglowing.config.WhyAmIGlowingConfig;
@@ -13,14 +10,11 @@ import com.zach2039.whyamiglowing.core.RadiationHelper;
 import com.zach2039.whyamiglowing.init.ModItems;
 import com.zach2039.whyamiglowing.text.WhyAmIGlowingLang;
 import com.zach2039.whyamiglowing.util.CapabilityNotPresentException;
-import dev.ftb.mods.ftblibrary.ui.GuiHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
@@ -51,15 +45,15 @@ public class GeigerCounterGuiOverlay implements IGuiOverlay {
 				.orElseThrow(CapabilityNotPresentException::new);
 
 		float currentAbsorbedDoseMillirems = radiation.getAbsorbedDoseMillirems();
-		float currentReceivedDoseMilliremsPerHour = RadiationHelper.convertPerSecondToPerHour(radiation.getCurrentExposureMilliremsPerSecond());
-		float lastReceivedDoseMilliremsPerHour = RadiationHelper.convertPerSecondToPerHour(radiation.getLastExposureMilliremsPerSecond());
+		float currentReceivedDoseMilliremsPerHour = RadiationHelper.convertPerSecondToPerHour(radiation.getCurrentTotalExposureMilliremsPerSecond());
+		float currentReceivedDoseExternalMilliremsPerHour = RadiationHelper.convertPerSecondToPerHour(radiation.getCurrentExternalExposureMilliremsPerSecond());
 		float currentRadiationResistance = radiation.getRadiationResistance();
 		final var hudPos = clientConfig.geigerCounterHudPos;
 
 		if (clientConfig.geigerCounterTextHud.get()) {
 			String absorbedDose = RadiationHelper.getDosageDisplayMillirems(currentAbsorbedDoseMillirems);
 			String currentExposure = RadiationHelper.getDosageDisplayMilliremsPerHour(currentReceivedDoseMilliremsPerHour);
-			String effectiveExposure = (currentRadiationResistance > 0f) ? " / " + RadiationHelper.getDosageDisplayMilliremsPerHour(currentReceivedDoseMilliremsPerHour * (1f - currentRadiationResistance)) + " eff" : "";
+			String effectiveExposure = (currentRadiationResistance > 0f) ? " / " + RadiationHelper.getDosageDisplayMilliremsPerHour(currentReceivedDoseExternalMilliremsPerHour * (1f - currentRadiationResistance)) + " eff" : "";
 			final var text = I18n.get(WhyAmIGlowingLang.GEIGER_COUNTER_HUD.getTranslationKey(),
 					absorbedDose, currentExposure, effectiveExposure);
 			poseStack.pushPose();
@@ -96,8 +90,6 @@ public class GeigerCounterGuiOverlay implements IGuiOverlay {
 				rangeDiv = 500000f;
 			}
 
-			//float lerpExposure = Mth.lerp(lastReceivedDoseMilliremsPerHour, currentReceivedDoseMilliremsPerHour, partialTick / 20f);
-			//float lerpExposure = lastReceivedDoseMilliremsPerHour + (currentReceivedDoseMilliremsPerHour - lastReceivedDoseMilliremsPerHour) * (partialTick / 20f);
 			float lerpExposure = currentReceivedDoseMilliremsPerHour;
 			float angleRand = (lerpExposure > 0f) ? (player.getRandom().nextFloat() - 0.5f) * 0.02f : 0f;
 			float angleRatio = Math.max(0f, Math.min(1f, (lerpExposure / rangeDiv) + angleRand));

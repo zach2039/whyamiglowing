@@ -15,11 +15,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
-public class GetRadiationCommand {
+public class GetRadiationDoseCommand {
 	private static final SimpleCommandExceptionType INVALID_ENTITY_EXCEPTION = new SimpleCommandExceptionType(Component.translatable("commands.whyamiglowing.radiation.invalid_entity"));
 
 	static ArgumentBuilder<CommandSourceStack, ?> register() {
-		return Commands.literal("get").requires((sourceStack) -> sourceStack.hasPermission(4))
+		return Commands.literal("get_dose").requires((sourceStack) -> sourceStack.hasPermission(4))
 				.then(Commands.argument("entity", EntityArgument.entity())
 						.executes(context ->
 								execute(
@@ -41,7 +41,7 @@ public class GetRadiationCommand {
 
 		context.getSource().sendSuccess(
 				Component.translatable(
-						WhyAmIGlowingLang.MESSAGE_RADIATION_GET.getTranslationKey(),
+						WhyAmIGlowingLang.MESSAGE_DOSE_GET.getTranslationKey(),
 						entity.getDisplayName(),
 						RadiationHelper.getDosageDisplayMillirems(radiation.getAbsorbedDoseMillirems())
 				),
