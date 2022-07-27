@@ -2,6 +2,8 @@ package com.zach2039.whyamiglowing.world.item;
 
 import com.zach2039.whyamiglowing.core.RadiationHelper;
 import com.zach2039.whyamiglowing.init.ModMobEffects;
+import com.zach2039.whyamiglowing.text.WhyAmIGlowingLang;
+import com.zach2039.whyamiglowing.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -18,6 +20,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
+import javax.annotation.meta.When;
 import java.util.List;
 
 public class RadXItem extends Item {
@@ -29,6 +32,8 @@ public class RadXItem extends Item {
 	@Override
 	public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> tooltip, TooltipFlag tooltipFlag) {
 		super.appendHoverText(itemStack, level, tooltip, tooltipFlag);
+
+		TooltipHelper.appendShiftTooltip(tooltip, WhyAmIGlowingLang.ITEM_RAD_X_DESC.getTranslationKey());
 
 		String radiationResistanceDuration = String.format("(%.1f sec)", RadiationHelper.getRadXDurationTicks() / 20f);
 		String radiationResistancePercentage = String.format("-%.1f%%", RadiationHelper.getRadXExposureResistance() * 100f);

@@ -6,6 +6,7 @@ import com.zach2039.whyamiglowing.api.capability.radiation.IRadiation;
 import com.zach2039.whyamiglowing.api.capability.radiationsource.IRadiationSource;
 import com.zach2039.whyamiglowing.capability.chunkradiation.ChunkRadiationCapability;
 import com.zach2039.whyamiglowing.capability.radiation.RadiationCapability;
+import com.zach2039.whyamiglowing.capability.radiationsource.RadiationSource;
 import com.zach2039.whyamiglowing.capability.radiationsource.RadiationSourceCapability;
 import com.zach2039.whyamiglowing.config.WhyAmIGlowingConfig;
 import com.zach2039.whyamiglowing.init.ModTags;
@@ -30,6 +31,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RadiationHelper {
 
@@ -120,6 +122,21 @@ public class RadiationHelper {
 		IRadiationSource radiationSource = chunkRadiation.getBlockSources().get(blockPos);
 
 		return radiationSource;
+	}
+
+	public static Map<BlockPos, RadiationSource> getRadiationSourcesFromChunk(final Level level, final BlockPos blockPos) {
+		LevelChunk levelChunk = (LevelChunk) level.getChunk(blockPos);
+
+		LazyOptional<IChunkRadiation> chunkRadiationOptional = ChunkRadiationCapability.getChunkRadiation(levelChunk);
+
+		if (!chunkRadiationOptional.isPresent())
+			return null;
+
+		IChunkRadiation chunkRadiation = chunkRadiationOptional.orElseThrow(CapabilityNotPresentException::new);
+
+		Map<BlockPos, RadiationSource> radiationSources = chunkRadiation.getBlockSources();
+
+		return radiationSources;
 	}
 
 	public static boolean tryMatchShielding(TagKey<Item> shieldTag, BlockState blockState) {

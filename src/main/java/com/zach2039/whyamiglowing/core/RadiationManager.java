@@ -96,13 +96,19 @@ public class RadiationManager {
 					IRadiationSource radiationSource = chunkRadiation.getBlockSources().get(blockPos);
 
 					if (radiationSource == null) {
-						WhyAmIGlowing.LOGGER.error("Radiation source at blockpos " + blockPos + " was null!");
+						WhyAmIGlowing.LOGGER.warn("Radiation source at blockpos " + blockPos + " was null!");
 						nullBlockPos.add(blockPos);
 						continue;
 					}
 
 					if (blockPos == null) {
-						WhyAmIGlowing.LOGGER.error("Tried using null blockpos for radiation source " + radiationSource + "!");
+						WhyAmIGlowing.LOGGER.warn("Tried using null blockpos for radiation source " + radiationSource + "!");
+						nullBlockPos.add(blockPos);
+						continue;
+					}
+
+					if (levelChunk.getBlockState(blockPos).isAir()) {
+						WhyAmIGlowing.LOGGER.debug("Radiation source " + radiationSource + " no longer valid at block position " + blockPos + "; removing");
 						nullBlockPos.add(blockPos);
 						continue;
 					}

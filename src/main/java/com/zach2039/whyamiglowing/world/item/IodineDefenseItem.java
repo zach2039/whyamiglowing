@@ -2,6 +2,8 @@ package com.zach2039.whyamiglowing.world.item;
 
 import com.zach2039.whyamiglowing.core.RadiationHelper;
 import com.zach2039.whyamiglowing.init.ModMobEffects;
+import com.zach2039.whyamiglowing.text.WhyAmIGlowingLang;
+import com.zach2039.whyamiglowing.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -30,10 +32,12 @@ public class IodineDefenseItem extends Item {
 	public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> tooltip, TooltipFlag tooltipFlag) {
 		super.appendHoverText(itemStack, level, tooltip, tooltipFlag);
 
+		TooltipHelper.appendShiftTooltip(tooltip, WhyAmIGlowingLang.ITEM_IODINE_DEFENSE_DESC.getTranslationKey());
+
 		String internalExposureResistanceDuration = String.format("(%.1f sec)", RadiationHelper.getIodineDefenseDurationTicks() / 20f);
 		String internalExposureResistance = String.format("-%.1f%%", RadiationHelper.getIodineInternalExposureResistance() * 100f);
 		tooltip.add(Component.literal(""));
-		tooltip.add(Component.literal( "☢(☣): " + internalExposureResistance + " " + internalExposureResistanceDuration).withStyle(ChatFormatting.DARK_GREEN));
+		tooltip.add(Component.literal( "☢☣: " + internalExposureResistance + " " + internalExposureResistanceDuration).withStyle(ChatFormatting.DARK_GREEN));
 	}
 
 	private void applyEffectToTarget(final Player player, final LivingEntity target) {

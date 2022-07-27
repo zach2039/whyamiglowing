@@ -2,6 +2,7 @@ package com.zach2039.whyamiglowing.world.item;
 
 import com.zach2039.whyamiglowing.core.RadiationHelper;
 import com.zach2039.whyamiglowing.text.WhyAmIGlowingLang;
+import com.zach2039.whyamiglowing.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -29,11 +30,12 @@ public class GeigerCounterItem extends Item {
 	public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> tooltip, TooltipFlag tooltipFlag) {
 		super.appendHoverText(itemStack, level, tooltip, tooltipFlag);
 
-		boolean isSilent = itemStack.getOrCreateTag().getBoolean("Silent");
+		TooltipHelper.appendShiftTooltip(tooltip, WhyAmIGlowingLang.ITEM_GEIGER_COUNTER_DESC.getTranslationKey());
 
+		boolean isSilent = itemStack.getOrCreateTag().getBoolean("Silent");
 		if (isSilent) {
 			tooltip.add(Component.literal(""));
-			tooltip.add(Component.translatable(WhyAmIGlowingLang.ITEM_DESC_GEIGER_SILENT.getTranslationKey()).withStyle(ChatFormatting.DARK_GRAY).withStyle(ChatFormatting.ITALIC));
+			tooltip.add(Component.translatable(WhyAmIGlowingLang.ITEM_GEIGER_COUNTER_SILENT.getTranslationKey()).withStyle(ChatFormatting.DARK_GRAY).withStyle(ChatFormatting.ITALIC));
 		}
 	}
 

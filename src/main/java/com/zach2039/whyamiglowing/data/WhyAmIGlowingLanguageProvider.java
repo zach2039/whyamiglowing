@@ -50,7 +50,13 @@ public class WhyAmIGlowingLanguageProvider extends LanguageProvider {
 	}
 
 	private void addTooltips() {
-		add(WhyAmIGlowingLang.ITEM_DESC_GEIGER_SILENT.getTranslationKey(), "Speaker off");
+		add(WhyAmIGlowingLang.ITEM_GEIGER_COUNTER_SILENT.getTranslationKey(), "Speaker off");
+		add(WhyAmIGlowingLang.ITEM_SHIFT_FOR_INFO_DESC.getTranslationKey(), "Press Shift for info");
+		add(WhyAmIGlowingLang.ITEM_GEIGER_COUNTER_DESC.getTranslationKey(), "Allows monitoring of radiation exposure. RMB to scan self or others. Shift+RMB to toggle speaker");
+		add(WhyAmIGlowingLang.ITEM_HAZMAT_GEAR_DESC.getTranslationKey(), "Increases exposure resistance. Wearing a full set provides bonus resistance and prevents contamination from handling radioactive materials");
+		add(WhyAmIGlowingLang.ITEM_RAD_AWAY_DESC.getTranslationKey(), "Reduces absorbed radiation dose over a period of time");
+		add(WhyAmIGlowingLang.ITEM_RAD_X_DESC.getTranslationKey(), "Increases exposure resistance for a period of time");
+		add(WhyAmIGlowingLang.ITEM_IODINE_DEFENSE_DESC.getTranslationKey(), "Increases internal exposure resistance from contamination for a period of time");
 	}
 	private void addMessages() {
 		// Commands

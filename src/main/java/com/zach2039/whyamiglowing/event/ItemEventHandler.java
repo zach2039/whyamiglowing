@@ -5,7 +5,9 @@ import com.zach2039.whyamiglowing.api.capability.radiationsource.IRadiationSourc
 import com.zach2039.whyamiglowing.capability.radiationsource.RadiationSourceCapability;
 import com.zach2039.whyamiglowing.core.RadiationHelper;
 import com.zach2039.whyamiglowing.init.ModTags;
+import com.zach2039.whyamiglowing.text.WhyAmIGlowingLang;
 import com.zach2039.whyamiglowing.util.CapabilityNotPresentException;
+import com.zach2039.whyamiglowing.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -49,6 +51,9 @@ public class ItemEventHandler {
 		String radiationResistancePercentageSetBonus = "";
 
 		if (itemStack.is(ModTags.Items.HAZMAT_GEAR_PIECE)) {
+			event.getToolTip().add(Component.literal(""));
+			TooltipHelper.appendShiftTooltip(event.getToolTip(), WhyAmIGlowingLang.ITEM_HAZMAT_GEAR_DESC.getTranslationKey());
+
 			float radiationResistanceHazmatSetBonus = RadiationHelper.getFullHazmatEquipmentResistanceBonus();
 			radiationResistancePercentageSetBonus = String.format(" (-%.1f%% set bonus)", radiationResistanceHazmatSetBonus * 100f);
 		}

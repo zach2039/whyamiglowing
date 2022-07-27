@@ -36,7 +36,14 @@ public enum WhyAmIGlowingLang {
 	GEIGER_COUNTER_HUD(prefix() + "geiger_counter.hud"),
 
 	// Item Tooltips
-	ITEM_DESC_GEIGER_SILENT("item", "geiger_silent.desc"),
+	ITEM_SHIFT_FOR_INFO_DESC("item", "shift_for_info.desc"),
+	ITEM_GEIGER_COUNTER_SILENT("item", "geiger_counter.silent"),
+	ITEM_GEIGER_COUNTER_DESC("item", "geiger_counter.desc"),
+	ITEM_RAD_AWAY_DESC("item", "rad_away.desc"),
+	ITEM_RAD_X_DESC("item", "rad_x.desc"),
+	ITEM_IODINE_DEFENSE_DESC("item", "iodine_defense.desc"),
+	ITEM_HAZMAT_GEAR_DESC("item", "hazmat_gear.desc"),
+
 
 	// Subtitles
 	SUBTITLE_GEIGER_TICK_LOW("subtitles", "geiger_tick.low"),

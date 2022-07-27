@@ -2,6 +2,8 @@ package com.zach2039.whyamiglowing.world.item;
 
 import com.zach2039.whyamiglowing.core.RadiationHelper;
 import com.zach2039.whyamiglowing.init.ModMobEffects;
+import com.zach2039.whyamiglowing.text.WhyAmIGlowingLang;
+import com.zach2039.whyamiglowing.util.TooltipHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -29,6 +31,8 @@ public class RadAwayItem extends Item {
 	@Override
 	public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> tooltip, TooltipFlag tooltipFlag) {
 		super.appendHoverText(itemStack, level, tooltip, tooltipFlag);
+
+		TooltipHelper.appendShiftTooltip(tooltip, WhyAmIGlowingLang.ITEM_RAD_AWAY_DESC.getTranslationKey());
 
 		String doseReductionDuration = String.format("(%.1f sec)", RadiationHelper.getRadAwayDurationTicks() / 20f);
 		String doseReduction = RadiationHelper.getDosageDisplayMilliremsPerHour(-RadiationHelper.getRadAwayDoseReductionMilliremPerHour());

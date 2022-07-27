@@ -145,13 +145,13 @@ public class WhyAmIGlowingConfig {
 			radiationSourceItemIntensities = builder
 					.comment("A list of intensities for the previously defined source items, in mrem/s.")
 					.define("radiationSourceIntensities", Arrays.asList(
-							55f,
+							27.5f,
+							125f,
 							250f,
-							500f,
-							500f,
-							500f,
-							2000f,
-							4500f,
+							250f,
+							250f,
+							1000f,
+							2250f,
 							1000f,
 							2000f,
 							4000f,
@@ -169,7 +169,7 @@ public class WhyAmIGlowingConfig {
 			radiationSourceBlockIntensities = builder
 					.comment("A list of intensities for the previously defined source blocks, in mrem/s.")
 					.define("radiationSourceBlockIntensities", Arrays.asList(
-							4500f,
+							2250f,
 							10000000f,
 							833f
 					));
