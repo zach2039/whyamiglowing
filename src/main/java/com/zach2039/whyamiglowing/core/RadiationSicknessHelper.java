@@ -207,12 +207,16 @@ public class RadiationSicknessHelper {
 		switch (severity) {
 			case SLIGHT:
 				ticks += 12000; // 12 hours in-game time
+				break;
 			case MILD:
 				ticks += 24000; // 24 hours in-game time
+				break;
 			case MODERATE:
 				ticks += 36000; // 36 hours in-game time
+				break;
 			case SEVERE:
 				ticks += 48000; // 48 hours in-game time
+				break;
 			case FATAL:
 			default:
 				ticks += 128000; // 128 hours in-game time

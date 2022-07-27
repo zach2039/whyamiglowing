@@ -1,10 +1,15 @@
 package com.zach2039.whyamiglowing.event;
 
 import com.zach2039.whyamiglowing.WhyAmIGlowing;
+import com.zach2039.whyamiglowing.api.capability.radiation.IRadiation;
+import com.zach2039.whyamiglowing.capability.radiation.RadiationCapability;
+import com.zach2039.whyamiglowing.capability.radiationsource.RadiationSourceCapability;
 import com.zach2039.whyamiglowing.core.RadiationManager;
 import com.zach2039.whyamiglowing.init.ModMobEffects;
+import com.zach2039.whyamiglowing.util.CapabilityNotPresentException;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -41,7 +46,14 @@ public class LivingEntityEventHandler {
 	public static void onEntityDeath(final LivingEvent event) {
 		if (event.getEntity() != null) {
 			if (event.getEntity().isDeadOrDying()) {
+				// Convert entities to other types if radiation on death was high enough
+				LazyOptional<IRadiation> radiationOptional = RadiationCapability.getRadiation(event.getEntity());
 
+				if (!radiationOptional.isPresent())
+					return;
+
+				IRadiation radiation = radiationOptional.orElseThrow(CapabilityNotPresentException::new);
+				// TODO: Convert entities
 			}
 		}
 	}

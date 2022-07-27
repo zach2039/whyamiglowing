@@ -206,6 +206,9 @@ public class RadiationManager {
 		float currentDose;
 		float currentContamination;
 
+		// Decrease dose and contamination
+		decreaseDoseAndContamination(livingEntity, radiation);
+
 		// Save last and reset current received rads
 		radiation.setLastExternalExposureMilliremsPerSecond(radiation.getCurrentExternalExposureMilliremsPerSecond());
 
@@ -222,7 +225,7 @@ public class RadiationManager {
 		}
 
 		currentContamination = radiation.getContaminationMilliremsPerSecond();
-		currentExposure += exposureFromItems + exposureFromNearby + currentContamination;
+		//currentTotalExposure += exposureFromItems + exposureFromNearby + currentContamination;
 
 		// Apply exposure
 		radiation.setCurrentExternalExposureMilliremsPerSecond(exposureFromItems + exposureFromNearby);
@@ -237,10 +240,8 @@ public class RadiationManager {
 
 		RadiationFxHelper.doGeigerNoise(livingEntity, radiation);
 
-		RadiationSicknessHelper.applyAcuteRadiationSicknessForDoseAndExposureMillirems(livingEntity, currentDose, RadiationHelper.convertPerSecondToPerHour(radiation.getCurrentTotalEffectiveExposureMilliremsPerSecond()));
-
-		// Decrease dose and contamination
-		decreaseDoseAndContamination(livingEntity, radiation);
+		float effectiveExposure = radiation.getCurrentTotalEffectiveExposureMilliremsPerSecond();
+		RadiationSicknessHelper.applyAcuteRadiationSicknessForDoseAndExposureMillirems(livingEntity, currentDose, RadiationHelper.convertPerSecondToPerHour(effectiveExposure));
 
 		// Error on NaN and reset
 		if (Float.isNaN(radiation.getAbsorbedDoseMillirems())) {

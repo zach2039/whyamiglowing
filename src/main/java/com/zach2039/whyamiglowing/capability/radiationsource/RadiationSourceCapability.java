@@ -98,16 +98,16 @@ public final class RadiationSourceCapability {
 
 		for (String sourceBlock : radiationSourceBlocks) {
 			if (sourceBlock.startsWith("#")) {
-				TagKey<Block> tag = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(sourceBlock.substring(1)));
+				TagKey<Item> tag = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(sourceBlock.substring(1)));
 
-				if (blockState.is(tag)) {
+				if (new ItemStack(blockState.getBlock().asItem()).is(tag)) {
 					blockKey = sourceBlock;
 					break;
 				}
 			} else {
-				Block blockInConfig = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(sourceBlock));
+				Item blockInConfig = ForgeRegistries.ITEMS.getValue(new ResourceLocation(sourceBlock));
 
-				if (blockInConfig.defaultBlockState().getBlock() == blockState.getBlock()) {
+				if (blockInConfig == blockState.getBlock().asItem()) {
 					blockKey = sourceBlock;
 					break;
 				}

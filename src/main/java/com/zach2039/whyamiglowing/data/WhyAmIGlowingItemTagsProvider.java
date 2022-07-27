@@ -55,14 +55,23 @@ public class WhyAmIGlowingItemTagsProvider extends ItemTagsProvider {
 
 			mediumRadProtectionTag.add(ModItems.HAZMAT_RESPIRATOR_MK_1.get());
 			mediumRadProtectionTag.add(ModItems.HAZMAT_BOOTS_MK_1.get());
+			mediumRadProtectionTag.addOptional(new ResourceLocation("ftbic", "carbon_helmet"));
+			mediumRadProtectionTag.addOptional(new ResourceLocation("ftbic", "carbon_boots"));
 
 			highRadProtectionTag.add(ModItems.HAZMAT_SUIT_TOP_MK_1.get());
 			highRadProtectionTag.add(ModItems.HAZMAT_SUIT_BOTTOM_MK_1.get());
 			highRadProtectionTag.add(ModItems.HAZMAT_RESPIRATOR_MK_2.get());
 			highRadProtectionTag.add(ModItems.HAZMAT_BOOTS_MK_2.get());
+			highRadProtectionTag.addOptional(new ResourceLocation("ftbic", "carbon_chestplate"));
+			highRadProtectionTag.addOptional(new ResourceLocation("ftbic", "carbon_leggings"));
+			highRadProtectionTag.addOptional(new ResourceLocation("ftbic", "quantum_helmet"));
+			highRadProtectionTag.addOptional(new ResourceLocation("ftbic", "quantum_boots"));
+
 
 			veryHighRadProtectionTag.add(ModItems.HAZMAT_SUIT_TOP_MK_2.get());
 			veryHighRadProtectionTag.add(ModItems.HAZMAT_SUIT_BOTTOM_MK_2.get());
+			veryHighRadProtectionTag.addOptional(new ResourceLocation("ftbic", "quantum_chestplate"));
+			veryHighRadProtectionTag.addOptional(new ResourceLocation("ftbic", "quantum_leggings"));
 
 			hazmatGearPieceTag.add(ModItems.HAZMAT_RESPIRATOR_MK_1.get());
 			hazmatGearPieceTag.add(ModItems.HAZMAT_RESPIRATOR_MK_2.get());
@@ -72,6 +81,14 @@ public class WhyAmIGlowingItemTagsProvider extends ItemTagsProvider {
 			hazmatGearPieceTag.add(ModItems.HAZMAT_SUIT_BOTTOM_MK_2.get());
 			hazmatGearPieceTag.add(ModItems.HAZMAT_BOOTS_MK_1.get());
 			hazmatGearPieceTag.add(ModItems.HAZMAT_BOOTS_MK_2.get());
+			hazmatGearPieceTag.addOptional(new ResourceLocation("ftbic", "carbon_helmet"));
+			hazmatGearPieceTag.addOptional(new ResourceLocation("ftbic", "carbon_chestplate"));
+			hazmatGearPieceTag.addOptional(new ResourceLocation("ftbic", "carbon_leggings"));
+			hazmatGearPieceTag.addOptional(new ResourceLocation("ftbic", "carbon_boots"));
+			hazmatGearPieceTag.addOptional(new ResourceLocation("ftbic", "quantum_helmet"));
+			hazmatGearPieceTag.addOptional(new ResourceLocation("ftbic", "quantum_chestplate"));
+			hazmatGearPieceTag.addOptional(new ResourceLocation("ftbic", "quantum_leggings"));
+			hazmatGearPieceTag.addOptional(new ResourceLocation("ftbic", "quantum_boots"));
 		}
 
 		tag(ModTags.Items.RADIATION_SHIELDING)
@@ -168,3 +185,4 @@ public class WhyAmIGlowingItemTagsProvider extends ItemTagsProvider {
 				;
 	}
 }
+

@@ -39,6 +39,13 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.whyamiglowing]]
+modId = "immersiveengineering"
+mandatory = false
+versionRange = "[1900,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.whyamiglowing]]
 modId = "factorymade"
 mandatory = false
 versionRange = "[1.19-,)"

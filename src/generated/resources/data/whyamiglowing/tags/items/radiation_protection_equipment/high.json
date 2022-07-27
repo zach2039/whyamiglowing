@@ -3,6 +3,22 @@
     "whyamiglowing:hazmat_suit_top_mk_1",
     "whyamiglowing:hazmat_suit_bottom_mk_1",
     "whyamiglowing:hazmat_respirator_mk_2",
-    "whyamiglowing:hazmat_boots_mk_2"
+    "whyamiglowing:hazmat_boots_mk_2",
+    {
+      "id": "ftbic:carbon_chestplate",
+      "required": false
+    },
+    {
+      "id": "ftbic:carbon_leggings",
+      "required": false
+    },
+    {
+      "id": "ftbic:quantum_helmet",
+      "required": false
+    },
+    {
+      "id": "ftbic:quantum_boots",
+      "required": false
+    }
   ]
 }

@@ -159,9 +159,9 @@ public class WhyAmIGlowingConfig {
 					));
 
 			radiationSourceBlocks = builder
-					.comment("A list of radiation source blocks. Block tags can be used. Some block sources might be active, like reactors.")
+					.comment("A list of radiation source blocks. Item tags can be used. Some block sources might be active, like reactors.")
 					.define("radiationSourceBlocks", Arrays.asList(
-							"ftbic:uranium_block",
+							"#forge:storage_blocks/uranium",
 							"ftbic:nuclear_reactor",
 							"whyamiglowing:fallout"
 					));

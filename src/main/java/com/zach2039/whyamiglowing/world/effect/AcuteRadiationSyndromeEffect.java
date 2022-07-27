@@ -32,7 +32,7 @@ public class AcuteRadiationSyndromeEffect extends WhyAmIGlowingMobEffect {
 				try {
 					int currentDuration = (int) duration.get(livingEntity.getEffect(this));
 					WhyAmIGlowing.LOGGER.debug("Sickness Duration Before (s): " + currentDuration / 20);
-					currentDuration = Math.max(1, currentDuration - (20 * 500)); // Reduce duration by 500 seconds every TICKS_BETWEEN_SYMPTOM_APPLICATION ticks
+					currentDuration = Math.max(1, currentDuration - (20 * 30)); // Reduce duration by 30 seconds every TICKS_BETWEEN_SYMPTOM_APPLICATION ticks
 					duration.set(livingEntity.getEffect(this), currentDuration);
 					WhyAmIGlowing.LOGGER.debug("Sickness Duration After (s): " + currentDuration / 20);
 				} catch (IllegalAccessException e) {

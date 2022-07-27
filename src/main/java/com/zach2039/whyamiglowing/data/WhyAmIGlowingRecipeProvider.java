@@ -82,6 +82,25 @@ public class WhyAmIGlowingRecipeProvider extends RecipeProvider {
 					.save(recipeConsumer, new ResourceLocation(WhyAmIGlowing.MODID, "rad_x"));
 		}
 
+		// Iodine-Defense
+		{
+			ShapedRecipeBuilder.shaped(ModItems.IODINE_DEFENSE.get())
+					.pattern(" C ")
+					.pattern("MBG")
+					.pattern(" P ")
+					.define('B', Ingredient.of(HONEY_BOTTLE))
+					.define('C', Ingredient.of(CALCITE))
+					.define('M', Ingredient.of(MAGMA_CREAM))
+					.define('G', Ingredient.of(GLOWSTONE_DUST))
+					.define('P', Ingredient.of(PRISMARINE_CRYSTALS))
+					.unlockedBy("has_honey_bottle", has(HONEY_BOTTLE))
+					.unlockedBy("has_calcite", has(CALCITE))
+					.unlockedBy("has_magma_cream", has(MAGMA_CREAM))
+					.unlockedBy("has_glowstone_dust", has(GLOWSTONE_DUST))
+					.unlockedBy("has_prismarine_crystals", has(PRISMARINE_CRYSTALS))
+					.save(recipeConsumer, new ResourceLocation(WhyAmIGlowing.MODID, "iodine_defense"));
+		}
+
 		// Hazmat Suit MkI
 		{
 			ShapedRecipeBuilder.shaped(ModItems.HAZMAT_RESPIRATOR_MK_1.get())

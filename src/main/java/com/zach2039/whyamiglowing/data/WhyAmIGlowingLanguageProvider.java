@@ -70,7 +70,7 @@ public class WhyAmIGlowingLanguageProvider extends LanguageProvider {
 		// Geiger Counter
 		add(WhyAmIGlowingLang.MESSAGE_TOGGLED_GEIGER_SPEAKER.getTranslationKey(), "Toggled speaker output.");
 		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_0.getTranslationKey(), "Scan of: %s");
-		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_1.getTranslationKey(), "Abs. Dose: %s");
+		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_1.getTranslationKey(), "Total Dose: %s");
 		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_2.getTranslationKey(), "Exposure: %s (%s eff.)");
 		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_3.getTranslationKey(), "Contamination: %s (%s eff.)");
 		add(WhyAmIGlowingLang.MESSAGE_GEIGER_SCAN_4.getTranslationKey(), "Output: %s");
