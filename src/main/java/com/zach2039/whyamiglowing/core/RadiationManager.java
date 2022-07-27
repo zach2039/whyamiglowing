@@ -237,7 +237,7 @@ public class RadiationManager {
 
 		RadiationFxHelper.doGeigerNoise(livingEntity, radiation);
 
-		RadiationSicknessHelper.applyAcuteRadiationSicknessForDoseAndExposureMillirems(livingEntity, currentDose, RadiationHelper.convertPerSecondToPerHour(currentExposure));
+		RadiationSicknessHelper.applyAcuteRadiationSicknessForDoseAndExposureMillirems(livingEntity, currentDose, RadiationHelper.convertPerSecondToPerHour(radiation.getCurrentTotalEffectiveExposureMilliremsPerSecond()));
 
 		// Decrease dose and contamination
 		decreaseDoseAndContamination(livingEntity, radiation);

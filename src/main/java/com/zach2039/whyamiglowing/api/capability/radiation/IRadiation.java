@@ -16,6 +16,7 @@ public interface IRadiation {
 	void setInternalRadiationResistance(float internalRadiationResistance);
 
 	float getCurrentTotalExposureMilliremsPerSecond();
+	float getCurrentTotalEffectiveExposureMilliremsPerSecond();
 
 	float getCurrentExternalExposureMilliremsPerSecond();
 	void setCurrentExternalExposureMilliremsPerSecond(float currentExposureMilliremsPerSecond);

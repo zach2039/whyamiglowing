@@ -98,10 +98,10 @@ public class BlockEventHandler {
 				newPos = event.getFaceOffsetPos();
 			}
 			IRadiationSource radSource = RadiationHelper.getRadiationSourceFromChunk(level, oldPos);
-			WhyAmIGlowing.LOGGER.info("type: " + event.getPistonMoveType());
-			WhyAmIGlowing.LOGGER.info("blockstate old: " + level.getBlockState(oldPos) + " / " + oldPos);
-			if (radSource != null) { // Shift radiation source
-				WhyAmIGlowing.LOGGER.info("blockstate new: " + level.getBlockState(newPos) + " / " + newPos);
+			WhyAmIGlowing.LOGGER.debug("type: " + event.getPistonMoveType());
+			WhyAmIGlowing.LOGGER.debug("blockstate old: " + level.getBlockState(oldPos) + " / " + oldPos);
+			if (radSource != null) { // Shift radiation source after piston moved it
+				WhyAmIGlowing.LOGGER.debug("blockstate new: " + level.getBlockState(newPos) + " / " + newPos);
 				RadiationHelper.getRadiationSourcesFromChunk(level, oldPos).remove(oldPos);
 				RadiationHelper.getRadiationSourcesFromChunk(level, newPos).put(newPos, (RadiationSource) radSource);
 			}

@@ -238,22 +238,42 @@ public class RadiationSicknessHelper {
 	}
 
 	private static SicknessSeverity getARSSeverityForDoseAndExposure(final float currentDoseMillirems, final float currentExposureMilliremsPerHour) {
+		final float currentDoseRem = RadiationHelper.convertMilliremToRem(currentDoseMillirems);
+		final float currentExposureRemPerHour = RadiationHelper.convertMilliremToRem(currentExposureMilliremsPerHour);
+
+		// Dose and exposure checks; short-term sickness
+		if (currentDoseRem >= 800f && currentExposureRemPerHour >= 800f)
+			return SicknessSeverity.FATAL;
+
+		if (currentDoseRem >= 600f && currentExposureRemPerHour >= 600f)
+			return SicknessSeverity.SEVERE;
+
+		if (currentDoseRem >= 400f && currentExposureRemPerHour >= 400f)
+			return SicknessSeverity.MODERATE;
+
+		if (currentDoseRem >= 200f && currentExposureRemPerHour >= 200f)
+			return SicknessSeverity.MILD;
+
+		if (currentDoseRem >= 100f && currentExposureRemPerHour >= 100f)
+			return SicknessSeverity.SLIGHT;
+
+		// Dose only checks; long-term sickness
 		if (currentDoseMillirems >= Radiation.MAX_DOSAGE_MILLIREMS)
 			return SicknessSeverity.INSTANT_DEATH;
 
-		if (currentDoseMillirems >= 3000000f && currentExposureMilliremsPerHour >= 3000000f)
+		if (currentDoseRem >= 1100f)
 			return SicknessSeverity.FATAL;
 
-		if (currentDoseMillirems >= 800000f && currentExposureMilliremsPerHour >= 800000f)
+		if (currentDoseRem >= 900f)
 			return SicknessSeverity.SEVERE;
 
-		if (currentDoseMillirems >= 600000f && currentExposureMilliremsPerHour >= 600000f)
+		if (currentDoseRem >= 700f)
 			return SicknessSeverity.MODERATE;
 
-		if (currentDoseMillirems >= 200000f && currentExposureMilliremsPerHour >= 200000f)
+		if (currentDoseRem >= 500f)
 			return SicknessSeverity.MILD;
 
-		if (currentDoseMillirems >= 100000f && currentExposureMilliremsPerHour >= 100000f)
+		if (currentDoseRem >= 300f)
 			return SicknessSeverity.SLIGHT;
 
 		return null;
@@ -303,3 +323,4 @@ public class RadiationSicknessHelper {
 	}
 
 }
+

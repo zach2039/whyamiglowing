@@ -92,6 +92,13 @@ public class Radiation implements IRadiation, INBTSerializable<CompoundTag> {
 	}
 
 	@Override
+	public float getCurrentTotalEffectiveExposureMilliremsPerSecond() {
+		final float effectiveExternalExposure = MathHelper.tol(this.currentExposureMilliremsPerSecond * (1 - this.radiationResistance));
+		final float effectiveInternalExposure = MathHelper.tol(this.contaminationMilliremsPerSecond * (1 - this.internalRadiationResistance));
+		return MathHelper.tol(effectiveInternalExposure + effectiveInternalExposure);
+	}
+
+	@Override
 	public float getCurrentExternalExposureMilliremsPerSecond() {
 		return MathHelper.tol(this.currentExposureMilliremsPerSecond);
 	}

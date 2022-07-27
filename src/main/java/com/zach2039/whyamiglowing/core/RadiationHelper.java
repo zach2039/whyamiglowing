@@ -293,6 +293,10 @@ public class RadiationHelper {
 		return millirem / 1000f;
 	}
 
+	public static float convertRemToMillirem(float rem) {
+		return rem * 1000f;
+	}
+
 	public static float convertPerSecondToPerHour(float perSecond) {
 		float perHour = perSecond * 60f * 60f;
 		return perHour;
